@@ -25,6 +25,7 @@ export default class Login extends Component {
                     <Text>Logo</Text>
                 </Stack>
                 <Stack className='pt-5' direction="vertical" gap={3} style={styles.content_form}>
+                    <Stack style={styles.content_form}>
                     <Form>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                         <InputGroup className="mb-3">
@@ -39,6 +40,7 @@ export default class Login extends Component {
                             placeholder="Usuario"
                             aria-label="Usuario"
                             aria-describedby="basic-addon1"
+                            type='email'
                             />
                         </InputGroup>
                         </Form.Group>
@@ -52,20 +54,32 @@ export default class Login extends Component {
                                     />
                                 </InputGroup.Text>
                                 <Form.Control
-                                placeholder="Contrasena"
-                                aria-label="Username"
+                                placeholder="Contraseña"
+                                aria-label="password"
                                 aria-describedby="basic-addon1"
+                                type='password'
                                 />
                             </InputGroup>
-                            <a className='text-right w-100'>
-                                <Form.Text className="text-muted">
-                                    ¿Haz olvidado tu contraseña?
-                                </Form.Text>
-                            </a>
-                        </Form.Group>
+                        </Form.Group>                
                     </Form>
+                    <a className='text-right w-100' style={styles.forgot_password}>
+                        <Form.Text className="text-muted">
+                            ¿Haz olvidado tu contraseña?
+                        </Form.Text>
+                    </a>
+                    </Stack>
                     
                     <Button variant="secondary">Iniciar Sesión</Button>
+
+                    <a className='text-center w-100'>
+                        <Form.Text className="text-muted" style={styles.link_type}>
+                            ¿Aún no tienes una cuenta?
+                            <br />
+                        </Form.Text>
+                        <Form.Text style={styles.bold_font}>
+                            Regístrate
+                        </Form.Text>
+                    </a>                            
                 </Stack>
             </div>
         </ThemeProvider>
@@ -87,5 +101,23 @@ const styles = StyleSheet.create({
         height: "70%",
         justifyContent: "center",
         margin: "3rem 0rem",
+    },
+    link_type:{
+        cursor: "pointer",
+        textDecoration: 'underline'
+    },
+    bold_font: {
+        fontWeight: 'bold'
+    },
+    txt_right: {
+        textAlign: "right",
+        alignItems: "right"
+    },
+    forgot_password: {
+        top: '-10px',
+        textAlign: "right",
+        alignItems: "right",
+        cursor: "pointer",
+        position: 'relative'
     }
   });
