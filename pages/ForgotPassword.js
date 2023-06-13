@@ -4,7 +4,7 @@ import { Button, Input, ThemeProvider, Stack, Form, InputGroup } from 'react-boo
 import { NavigationContext } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default class Login extends Component {
+export default class ForgotPassword extends Component {
   static contextType = NavigationContext;
   constructor(props) {
     super(props);
@@ -33,7 +33,7 @@ export default class Login extends Component {
         navigation_.navigate(view, {});
     }
 
-    const handleLogin = () => {
+    const handleClick = () => {
         const navigation_ = this.context;
         navigation_.navigate('Home', {});
     }
@@ -49,58 +49,37 @@ export default class Login extends Component {
                 </Stack>
                 <Stack className='pt-5' direction="vertical" gap={3} style={styles.content_form}>
                     <Stack style={styles.content_form}>
-                    <Form>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <InputGroup className="mb-3">
-                            <InputGroup.Text className='bg-white' id="basic-addon1">
-                                <Icon
-                                    name='email'
-                                    size={24}
-                                    color='#7c7c7c'
-                                />
-                            </InputGroup.Text>
-                            <Form.Control
-                            placeholder="Usuario"
-                            aria-label="Usuario"
-                            aria-describedby="basic-addon1"
-                            type='email'
-                            />
-                        </InputGroup>
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form>
+                            <Stack>
+                                <Text style={styles.title_form}>
+                                    Ingresa tu correo electronico, te enviaremos un correo con instrucciones para restablecer tu contraseña.
+                                </Text>
+                            </Stack>
+                            <Form.Group className="mb-3" controlId="formBasicEmail">
                             <InputGroup className="mb-3">
-                                <InputGroup.Text id="basic-addon1" className='bg-white'>
+                                <InputGroup.Text className='bg-white' id="basic-addon1">
                                     <Icon
-                                        name='lock'
+                                        name='email'
                                         size={24}
                                         color='#7c7c7c'
                                     />
                                 </InputGroup.Text>
                                 <Form.Control
-                                placeholder="Contraseña"
-                                aria-label="password"
+                                placeholder="Email"
+                                aria-label="Usuario"
                                 aria-describedby="basic-addon1"
-                                type='password'
+                                type='email'
                                 />
                             </InputGroup>
-                        </Form.Group>                
-                    </Form>
-                    <a className='text-right w-100' style={styles.forgot_password} onClick={(e) => {e.preventDefault(); handleChangeView('ForgotPassword')}}>
-                        <Form.Text className="text-muted">
-                            ¿Haz olvidado tu contraseña?
-                        </Form.Text>
-                    </a>
+                            </Form.Group>           
+                        </Form>
                     </Stack>
                     
-                    <Button variant="secondary" onClick={handleLogin}>Iniciar Sesión</Button>
+                    <Button variant="secondary" onClick={handleClick}>Envíar</Button>
 
-                    <a className='text-center w-100' onClick={(e) => {e.preventDefault(); handleChangeView('Register')}}>
-                        <Form.Text className="text-muted" style={styles.link_type}>
-                            ¿Aún no tienes una cuenta?
-                            <br />
-                        </Form.Text>
+                    <a className='text-center w-100' onClick={(e) => {e.preventDefault(); handleChangeView('Login')}}>
                         <Form.Text style={styles.bold_font}>
-                            Regístrate
+                            Iniciar sesión
                         </Form.Text>
                     </a>                            
                 </Stack>
@@ -142,5 +121,9 @@ const styles = StyleSheet.create({
         alignItems: "right",
         cursor: "pointer",
         position: "relative"
+    },
+    title_form: {
+        fontWeight: "bold",
+        marginBottom: "1rem"
     }
   });

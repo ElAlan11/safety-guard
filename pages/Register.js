@@ -15,6 +15,11 @@ export default class Register extends Component {
   } 
 
   render() {
+    const handleChangeView = () => {
+        const navigation_ = this.context;
+        navigation_.navigate('Login', {});
+    }
+
     return (
         <ThemeProvider
             breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
@@ -31,7 +36,7 @@ export default class Register extends Component {
                             <InputGroup className="mb-3">
                                 <InputGroup.Text className='bg-white' id="basic-addon1">
                                     <Icon
-                                        name='name'
+                                        name='account-settings'
                                         size={24}
                                         color='#7c7c7c'
                                     />
@@ -47,7 +52,7 @@ export default class Register extends Component {
                             <InputGroup className="mb-3">
                                 <InputGroup.Text className='bg-white' id="basic-addon1">
                                     <Icon
-                                        name='last_name'
+                                        name='account-settings'
                                         size={24}
                                         color='#7c7c7c'
                                     />
@@ -63,7 +68,7 @@ export default class Register extends Component {
                             <InputGroup className="mb-3">
                                 <InputGroup.Text className='bg-white' id="basic-addon1">
                                     <Icon
-                                        name='last_name'
+                                        name='phone'
                                         size={24}
                                         color='#7c7c7c'
                                     />
@@ -114,7 +119,7 @@ export default class Register extends Component {
                             <InputGroup className="mb-3">
                                 <InputGroup.Text id="basic-addon1" className='bg-white'>
                                     <Icon
-                                        name='lock-confirm'
+                                        name='lock'
                                         size={24}
                                         color='#7c7c7c'
                                     />
@@ -132,7 +137,7 @@ export default class Register extends Component {
                     
                     <Button variant="secondary">Regístrarme</Button>
 
-                    <a className='text-center w-100'>
+                    <a className='text-center w-100' onClick={handleChangeView}>
                         <Form.Text className="text-muted" style={styles.link_type}>
                             ¿Ya tienes una cuenta?
                             <br />
@@ -152,7 +157,7 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       padding: 24,
-      backgroundColor: '#fff',
+      backgroundColor: "#fff",
     },
     center: {
         textAlign: "center",
@@ -165,17 +170,17 @@ const styles = StyleSheet.create({
     },
     link_type:{
         cursor: "pointer",
-        textDecoration: 'underline'
+        textDecorationLine: "underline"
     },
     bold_font: {
-        fontWeight: 'bold'
+        fontWeight: "bold"
     },
     txt_right: {
         textAlign: "right",
         alignItems: "right"
     },
     forgot_password: {
-        top: '-10px',
+        top: "-10px",
         textAlign: "right",
         alignItems: "right",
         cursor: "pointer",
