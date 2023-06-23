@@ -18,10 +18,11 @@ export default class Home extends Component {
       const navigation_ = this.context;
       navigation_.navigate(view, {});
     };
+    
 
     const handleLogin = () => {
       const navigation_ = this.context;
-      navigation_.navigate("Home", {});
+      navigation_.navigate("Login", {});
     };
 
     const toggle = () => {
@@ -38,7 +39,7 @@ export default class Home extends Component {
         minBreakpoint="xxs"
       >
         <div style={styles.header}>
-          <HeaderMenu toggle={toggle} open={this.state.open} />
+          <HeaderMenu toggle={toggle} open={this.state.open} login = {handleLogin}/>
         </div>
         <div style={styles.container}>
           <BtnContainer toggle={toggle} />

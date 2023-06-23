@@ -4,11 +4,11 @@ import { StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
 import { Stack, Col, Row } from 'react-bootstrap';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function HeaderMenu({toggle,open}) {
+export default function HeaderMenu({toggle,open, login}) {
 
     const drawerContent = () => {
         return (
-            <SideBar toggle = {toggle}/>
+            <SideBar toggle = {toggle} login = {login}/>
         );
     };
     return(                           

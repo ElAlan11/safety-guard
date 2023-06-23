@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Stack, Col, Row } from "react-bootstrap";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-export default function SideBar({ toggle }) {
+export default function SideBar({ toggle,login }) {
   return (
     <View style={styles.container_menu}>
       <Stack style={styles.bodyMenu}>
@@ -44,7 +44,7 @@ export default function SideBar({ toggle }) {
               Mis alertas
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.animatedBox}>
+          <TouchableOpacity style={styles.animatedBox} onPress={login}>
             <Text style={styles.txt_menu}>
               <Icon
                 name="exit-to-app"
