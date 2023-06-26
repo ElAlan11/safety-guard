@@ -14,6 +14,8 @@ export default class Home extends Component {
     };
   }
   render() {
+    console.log(this.state);
+
     const handleChangeView = (view) => {
       const navigation_ = this.context;
       navigation_.navigate(view, {});
@@ -28,6 +30,10 @@ export default class Home extends Component {
     const toggle = () => {
       this.setState({ open: !this.state.open });
     };
+    const trusted = () => {
+      const navigation_ = this.context;
+      navigation_.navigate("Trusted", {});
+    }
 
     const handlePressHelp = () => {
       this.setState({ open: !this.state.open });
@@ -39,7 +45,7 @@ export default class Home extends Component {
         minBreakpoint="xxs"
       >
         <div style={styles.header}>
-          <HeaderMenu toggle={toggle} open={this.state.open} login = {handleLogin}/>
+          <HeaderMenu toggle={toggle} open={this.state.open} login = {handleLogin} trusted = {trusted}/>
         </div>
         <div style={styles.container}>
           <BtnContainer toggle={toggle} />

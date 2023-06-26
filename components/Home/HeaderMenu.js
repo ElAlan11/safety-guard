@@ -4,11 +4,11 @@ import { StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
 import { Stack, Col, Row } from 'react-bootstrap';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function HeaderMenu({toggle,open, login}) {
+export default function HeaderMenu({toggle,open, login,trusted}) {
 
     const drawerContent = () => {
         return (
-            <SideBar toggle = {toggle} login = {login}/>
+            <SideBar toggle = {toggle} login = {login} trusted={trusted}/>
         );
     };
     return(                           
@@ -64,13 +64,13 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     body: {
-        //flex: 1,
+        // flex: 1,
         width: "100%",
         alignItems: "center",
         justifyContent: 'start',
         backgroundColor: '#ffffff',
         paddingTop: "20px",
         paddingBottom: "20px",
-        boxShadow: "black 2px 1px 9px 0px",
+        // boxShadow: "black 2px 1px 9px 0px",
     },
   });

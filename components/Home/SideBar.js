@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Stack, Col, Row } from "react-bootstrap";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-export default function SideBar({ toggle,login }) {
+export default function SideBar({ toggle,login,trusted }) {
   return (
     <View style={styles.container_menu}>
       <Stack style={styles.bodyMenu}>
@@ -22,7 +22,7 @@ export default function SideBar({ toggle,login }) {
           <Col></Col>
         </Row>
         <Row style={styles.row_menu}>
-          <TouchableOpacity onPress={toggle} style={styles.animatedBox}>
+          <TouchableOpacity onPress={trusted} style={styles.animatedBox}>
             <Text style={styles.txt_menu}>
               <Icon
                 name="account-group-outline"
