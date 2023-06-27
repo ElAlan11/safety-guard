@@ -1,15 +1,21 @@
-import { Button, Input, ThemeProvider, Stack, Form, InputGroup } from "react-bootstrap";
+import { Button, Form, InputGroup } from "react-bootstrap";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { StyleSheet, View, Text } from "react-native";
+import { NavigationContext } from "@react-navigation/native";
+import { useContext } from "react";
 
-export default function LoginForm({login,register,password}) {
+export default function LoginForm() {
+  const navigation = useContext(NavigationContext);
+  const handleView = (view) => {
+    navigation.navigate(view);
+  };
   return (
     <View style={styles.mainContainer}>
       <View style={styles.logoContainer}>
         <Text>Logo</Text>
       </View>
       <View style={styles.formContainer}>
-      <Form>
+        <Form>
           <Form.Group controlId="formBasicEmail">
             <InputGroup className="mb-3">
               <InputGroup.Text className="bg-white" id="basic-addon1">
@@ -26,13 +32,13 @@ export default function LoginForm({login,register,password}) {
               <Form.Control placeholder="Contraseña" aria-label="password" aria-describedby="basic-addon1" type="password" />
             </InputGroup>
           </Form.Group>
-      </Form>
+        </Form>
       </View>
       <View style={styles.forgotPassword}>
         <a
           onClick={(e) => {
             e.preventDefault();
-            password();
+            handleView("ForgotPassword");
           }}
         >
           <Form.Text style={styles.link} className="text-muted">
@@ -40,14 +46,21 @@ export default function LoginForm({login,register,password}) {
           </Form.Text>
         </a>
       </View>
-      <Button style={styles.button} variant="secondary" onClick={login}>
+      <Button
+        style={styles.button}
+        variant="secondary"
+        onClick={(e) => {
+          e.preventDefault();
+          handleView("Home");
+        }}
+      >
         Iniciar Sesión
       </Button>
       <a
         style={styles.register}
         onClick={(e) => {
           e.preventDefault();
-          register();
+          handleView("Register");
         }}
       >
         <Form.Text className="text-muted" style={styles.link}>
@@ -60,13 +73,12 @@ export default function LoginForm({login,register,password}) {
 }
 const styles = StyleSheet.create({
   mainContainer: {
-    flex: 1, 
+    flex: 1,
     display: "flex",
-    flexDirection:'column',
+    flexDirection: "column",
     justifyContent: "center",
     alignContent: "center",
     padding: 10,
-
   },
   formContainer: {
     flex: 1,

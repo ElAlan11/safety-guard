@@ -1,8 +1,21 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Stack, Col, Row } from "react-bootstrap";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { useContext } from "react";
+import { NavigationContext } from "@react-navigation/native";
 
-export default function SideBar({ toggle,login,trusted }) {
+export default function SideBar({ toggle }) {
+  const navigation = useContext(NavigationContext);
+  const goToLogin = () => {
+    toggle();
+    navigation.navigate("Login");
+  };
+
+  const goToTrusted = () => {
+    toggle();
+    navigation.navigate("Trusted");
+  };
+
   return (
     <View style={styles.container_menu}>
       <Stack style={styles.bodyMenu}>
@@ -22,36 +35,21 @@ export default function SideBar({ toggle,login,trusted }) {
           <Col></Col>
         </Row>
         <Row style={styles.row_menu}>
-          <TouchableOpacity onPress={trusted} style={styles.animatedBox}>
+          <TouchableOpacity onPress={goToTrusted} style={styles.animatedBox}>
             <Text style={styles.txt_menu}>
-              <Icon
-                name="account-group-outline"
-                size={26}
-                color="#7c7c7c"
-                style={styles.pr_1}
-              />
+              <Icon name="account-group-outline" size={26} color="#7c7c7c" style={styles.pr_1} />
               Contactos de confianza
             </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={toggle} style={styles.animatedBox}>
             <Text style={styles.txt_menu}>
-              <Icon
-                name="account-alert-outline"
-                size={26}
-                color="#7c7c7c"
-                style={styles.pr_1}
-              />
+              <Icon name="account-alert-outline" size={26} color="#7c7c7c" style={styles.pr_1} />
               Mis alertas
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.animatedBox} onPress={login}>
+          <TouchableOpacity style={styles.animatedBox} onPress={goToLogin}>
             <Text style={styles.txt_menu}>
-              <Icon
-                name="exit-to-app"
-                size={24}
-                color="#7c7c7c"
-                style={styles.pr_1}
-              />
+              <Icon name="exit-to-app" size={24} color="#7c7c7c" style={styles.pr_1} />
               Cerrar Sesion
             </Text>
           </TouchableOpacity>
@@ -98,7 +96,7 @@ const styles = StyleSheet.create({
   bodyMenu: {
     //flex: 1,
     width: "100%",
-    height: '100%',
+    height: "100%",
     alignItems: "center",
     justifyContent: "start",
     backgroundColor: "#ffffff",

@@ -1,4 +1,4 @@
-import {Button} from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 
@@ -9,11 +9,7 @@ export default function BtnContainer({ toggle }) {
         <Text style={styles.title}> Presioname si estas en peligro</Text>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={toggle}
-          opacity={0.8}
-          style={styles.touchableOptions}
-        >
+        <TouchableOpacity onPress={toggle} opacity={0.8} style={styles.touchableOptions}>
           <Button style={styles.buttonHelp}>
             <Icon name="shield-alert" size={130} color="white" />
           </Button>

@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import { StyleSheet } from "react-native";
-import { ThemeProvider, Stack } from "react-bootstrap";
-import { NavigationContext } from "@react-navigation/native";
+import { ThemeProvider } from "react-bootstrap";
 import HeaderMenu from "../components/Home/HeaderMenu.js";
 import BtnContainer from "../components/Home/BtnContainer.js";
 
 export default class Home extends Component {
-  static contextType = NavigationContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -14,38 +12,14 @@ export default class Home extends Component {
     };
   }
   render() {
-    console.log(this.state);
-
-    const handleChangeView = (view) => {
-      const navigation_ = this.context;
-      navigation_.navigate(view, {});
-    };
-    
-
-    const handleLogin = () => {
-      const navigation_ = this.context;
-      navigation_.navigate("Login", {});
-    };
-
     const toggle = () => {
-      this.setState({ open: !this.state.open });
-    };
-    const trusted = () => {
-      const navigation_ = this.context;
-      navigation_.navigate("Trusted", {});
-    }
-
-    const handlePressHelp = () => {
       this.setState({ open: !this.state.open });
     };
 
     return (
-      <ThemeProvider
-        breakpoints={["xxxl", "xxl", "xl", "lg", "md", "sm", "xs", "xxs"]}
-        minBreakpoint="xxs"
-      >
+      <ThemeProvider breakpoints={["xxxl", "xxl", "xl", "lg", "md", "sm", "xs", "xxs"]} minBreakpoint="xxs">
         <div style={styles.header}>
-          <HeaderMenu toggle={toggle} open={this.state.open} login = {handleLogin} trusted = {trusted}/>
+          <HeaderMenu open={this.state.open} toggle={toggle} />
         </div>
         <div style={styles.container}>
           <BtnContainer toggle={toggle} />
