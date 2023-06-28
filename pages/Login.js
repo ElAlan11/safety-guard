@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet } from "react-native";
 import { ThemeProvider } from "react-bootstrap";
 import LoginForm from "../components/Login/LoginForm.js";
+import colors from '../components/assets/colors.js'
 
 export default class Login extends Component {
   constructor(props) {
@@ -32,11 +33,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     padding: 30,
-    backgroundColor: "rgb(77,64,122)",
+    backgroundColor: colors.primary,
   },
   container1: {
     flex: 1,
-    backgroundColor: "rgba(255,255,255,.6)",
+    backgroundColor: colors.blured,
     borderRadius: 10,
   },
 });

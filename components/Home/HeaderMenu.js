@@ -9,7 +9,7 @@ export default function HeaderMenu({ open, toggle }) {
     return <SideBar toggle={toggle} />;
   };
   return (
-    <MenuDrawer open={open} drawerContent={drawerContent()} drawerPercentage={100} animationTime={250} overlay={true} opacity={0.9} onClose={toggle}>
+    <MenuDrawer open={open} drawerContent={drawerContent()} drawerPercentage={100} animationTime={250} overlay={true} opacity={0.9} onClose={toggle} >
       <Stack style={styles.body}>
         <Row style={styles.w_100}>
           <Col>
@@ -41,7 +41,7 @@ export default function HeaderMenu({ open, toggle }) {
 
 const styles = StyleSheet.create({
   w_100: {
-    width: "100%",
+    width: "100%",   
   },
   center: {
     textAlign: "center",

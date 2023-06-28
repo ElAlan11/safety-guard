@@ -3,6 +3,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { StyleSheet, View, Text } from "react-native";
 import { NavigationContext } from "@react-navigation/native";
 import { useContext } from "react";
+import colors from '../assets/colors'
 
 export default function LoginForm() {
   const navigation = useContext(NavigationContext);
@@ -85,6 +86,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 10,
+    backgroundColor: colors.primary
   },
   forgotPassword: {
     alignItems: "flex-end",
