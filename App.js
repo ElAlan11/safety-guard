@@ -7,7 +7,6 @@ import Home from "./pages/Home";
 import ForgotPassword from "./pages/ForgotPassword";
 import Trusted from "./pages/Trusted";
 import TrustedEdit from "./pages/TrustedEdit";
-import "bootstrap/dist/css/bootstrap.css";
 
 export default function App() {
   const Stack = createNativeStackNavigator();

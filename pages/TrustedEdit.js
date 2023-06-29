@@ -1,51 +1,34 @@
-import { Form, InputGroup, Button } from "react-bootstrap";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { View, StyleSheet } from "react-native";
 import { Avatar } from "@rneui/themed";
 import colors from "../components/assets/colors";
 import { useState } from "react";
+import { Input, Icon,Button} from "@rneui/themed";
 
 export default function TrustedEdit({ navigation, route }) {
   const [user, setUser] = useState(route.params);
-  
+
   const editProfile = () => {
     navigation.goBack();
   };
 
-  const cancel =() =>{
+  const cancel = () => {
     navigation.goBack();
-  }
+  };
   return (
     <View style={styles.mainView}>
-      <Form style={styles.form}>
+      <View style={styles.form}>
         <View style={styles.avatarContainer}>
           <Avatar rounded source={{ uri: user.image }} size={150} />
         </View>
-        <Form.Group controlId="formBasicEmail">
-          <InputGroup className="mb-2">
-            <InputGroup.Text className="bg-white" id="basic-addon1" >
-              <Icon name="account" size={30} color={colors.primary} />
-            </InputGroup.Text>
-            <Form.Control placeholder="Usuario" aria-label="Usuario" aria-describedby="basic-addon1" type="email" defaultValue={user.name} style={styles.mailText} />
-          </InputGroup>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <InputGroup>
-            <InputGroup.Text id="basic-addon1" className="bg-white">
-              <Icon name="phone" size={30} color={colors.primary} />
-            </InputGroup.Text>
-            <Form.Control placeholder="Número" aria-label="phoneNumber" aria-describedby="basic-addon1" type="tel" defaultValue={user.tel} />
-          </InputGroup>
-        </Form.Group>
         <View>
-          <Button onClick={editProfile} style={styles.primaryButton}>
-            Guardar
-          </Button>
-          <Button style={styles.secondaryButton} onClick={cancel}>
-            Cancelar
-          </Button>
+          <Input placeholder="Nombre" leftIcon={<Icon name="user" type="font-awesome" size={24} color={colors.primary} />} inputContainerStyle = {{borderBottomWidth: 0,}} errorStyle={{height: 0}} labelStyle={{height: 0}} containerStyle={styles.inputContainer}  textContentType="name"  defaultValue={user.name} inputMode="text"></Input>
+          <Input placeholder="Telefono" leftIcon={<Icon name="phone" type="font-awesome" size={24} color={colors.primary} />} inputContainerStyle = {{borderBottomWidth: 0}} errorStyle={{height: 0}} labelStyle={{height: 0}} containerStyle={styles.inputContainer}  textContentType="telephoneNumber" defaultValue={user.tel} inputMode="tel"></Input>
         </View>
-      </Form>
+        <View>
+          <Button buttonStyle={styles.primaryButton} onPress={editProfile} >Agregar</Button>
+          <Button buttonStyle={styles.secondaryButton} titleStyle={{color: 'black'}} onPress={cancel} >Cancelar</Button>
+        </View>
+      </View>
     </View>
   );
 }
@@ -59,15 +42,17 @@ const styles = StyleSheet.create({
   },
   secondaryButton: {
     backgroundColor: "white",
-    marginTop: "3px",
-    color: colors.primary,
-    borderColor: "white",
+    marginTop: 3,
+    borderColor: colors.primary,
+    borderWidth: 1,
+    borderRadius: 8
   },
-  primaryButton: { 
+  primaryButton: {
     borderStyle: "solid",
-    backgroundColor: colors.primary, 
-    borderColor: colors.primary, 
-    fontWeight: "revert" 
+    backgroundColor: colors.primary,
+    borderColor: colors.primary,
+    borderRadius: 8,
+    marginTop: 10
   },
 
   form: {
@@ -78,9 +63,17 @@ const styles = StyleSheet.create({
   },
   avatarContainer: {
     alignItems: "center",
-    marginBottom: "30px",
+    marginBottom: 30,
   },
-  mailText:{
-    textTransform: 'capitalize',
+  mailText: {
+    textTransform: "capitalize",
+  },
+  inputContainer:{
+    backgroundColor:'white',
+    alignItems:'center',
+    flexDirection:'row',
+    borderRadius:10,
+    marginBottom: 10,
+    
   }
 });

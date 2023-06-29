@@ -12,8 +12,8 @@ export default function TrustedContact({name,tel,id,image}) {
   };
 
   return (
-    <TouchableOpacity onPress={editProfile}  >
-      <ListItem containerStyle={{backgroundColor: colors.blured, borderRadius: 10,marginBottom:'5px'}}>
+    <TouchableOpacity onPress={editProfile} >
+      <ListItem containerStyle={{backgroundColor: colors.blured, borderRadius: 10,marginBottom: 5 }}>
         <Avatar rounded source={{ uri: image }} size={50}/>
         <ListItem.Content >
           <ListItem.Title style={styles.text}>{name}</ListItem.Title>
@@ -28,6 +28,6 @@ const styles = StyleSheet.create({
   text:{
     textTransform:'capitalize',
     fontFamily: 'Helvetica',
-    fontSize: '18px'
+    fontSize: 18
   }
 })
