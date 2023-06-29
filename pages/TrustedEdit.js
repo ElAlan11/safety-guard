@@ -1,8 +1,7 @@
 import { View, StyleSheet } from "react-native";
-import { Avatar } from "@rneui/themed";
 import colors from "../components/assets/colors";
 import { useState } from "react";
-import { Input, Icon,Button} from "@rneui/themed";
+import { Input, Icon, Button, Avatar } from "@rneui/themed";
 
 export default function TrustedEdit({ navigation, route }) {
   const [user, setUser] = useState(route.params);
@@ -26,7 +25,7 @@ export default function TrustedEdit({ navigation, route }) {
         </View>
         <View>
           <Button buttonStyle={styles.primaryButton} onPress={editProfile} >Agregar</Button>
-          <Button buttonStyle={styles.secondaryButton} titleStyle={{color: 'black'}} onPress={cancel} >Cancelar</Button>
+          <Button buttonStyle={styles.secondaryButton} titleStyle={{color: colors.primary}} onPress={cancel} >Cancelar</Button>
         </View>
       </View>
     </View>

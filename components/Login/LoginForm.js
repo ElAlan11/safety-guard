@@ -1,9 +1,8 @@
-import { Button, Form, InputGroup } from "react-bootstrap";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { Input, Icon, Button, Avatar } from "@rneui/themed";
 import { NavigationContext } from "@react-navigation/native";
 import { useContext } from "react";
-import colors from '../assets/colors'
+import colors from "../assets/colors";
 
 export default function LoginForm() {
   const navigation = useContext(NavigationContext);
@@ -11,100 +10,105 @@ export default function LoginForm() {
     navigation.navigate(view);
   };
   return (
-    <View style={styles.mainContainer}>
-      <View style={styles.logoContainer}>
-        <Text>Logo</Text>
+    <View style={styles.mainView}>
+      <View style={styles.form}>
+        <View style={styles.avatarContainer}>
+          <Avatar rounded source={{ uri: "https://randomuser.me/api/portraits/men/36.jpg" }} size={150} />
+        </View>
+        <View>
+          <Input
+            placeholder="Correo"
+            leftIcon={<Icon name="envelope" type="font-awesome" size={24} color={colors.primary} />}
+            inputContainerStyle={{ borderBottomWidth: 0 }}
+            errorStyle={{ height: 0 }}
+            labelStyle={{ height: 0 }}
+            containerStyle={styles.inputContainer}
+            textContentType="emailAddress"
+            inputMode="email"
+            autoCapitalize="none"
+          ></Input>
+          <Input
+            placeholder="Contraseña"
+            leftIcon={<Icon name="asterisk" type="font-awesome" size={24} color={colors.primary} />}
+            inputContainerStyle={{ borderBottomWidth: 0 }}
+            errorStyle={{ height: 0 }}
+            labelStyle={{ height: 0 }}
+            containerStyle={styles.inputContainer}
+            textContentType="password"
+            secureTextEntry
+          ></Input>
+        </View>
+        <View >
+          <TouchableOpacity>
+            <Text style={styles.forgotPass} >¿Olvidaste tu contraseña?</Text>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <Button buttonStyle={styles.primaryButton}>Iniciar Sesion</Button>
+        </View>
       </View>
-      <View style={styles.formContainer}>
-        <Form>
-          <Form.Group controlId="formBasicEmail">
-            <InputGroup className="mb-3">
-              <InputGroup.Text className="bg-white" id="basic-addon1">
-                <Icon name="email" size={24} color="#7c7c7c" />
-              </InputGroup.Text>
-              <Form.Control placeholder="Usuario" aria-label="Usuario" aria-describedby="basic-addon1" type="email" />
-            </InputGroup>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <InputGroup>
-              <InputGroup.Text id="basic-addon1" className="bg-white">
-                <Icon name="lock" size={24} color="#7c7c7c" />
-              </InputGroup.Text>
-              <Form.Control placeholder="Contraseña" aria-label="password" aria-describedby="basic-addon1" type="password" />
-            </InputGroup>
-          </Form.Group>
-        </Form>
+      <View style={styles.textContainer}>
+      <TouchableOpacity style={{flexDirection: 'row'}}>
+        <Text>¿Nuevo en la app? </Text><Text style={styles.registerText}>Registrate.</Text>
+      </TouchableOpacity>
       </View>
-      <View style={styles.forgotPassword}>
-        <a
-          onClick={(e) => {
-            e.preventDefault();
-            handleView("ForgotPassword");
-          }}
-        >
-          <Form.Text style={styles.link} className="text-muted">
-            ¿Haz olvidado tu contraseña?
-          </Form.Text>
-        </a>
-      </View>
-      <Button
-        style={styles.button}
-        variant="secondary"
-        onClick={(e) => {
-          e.preventDefault();
-          handleView("Home");
-        }}
-      >
-        Iniciar Sesión
-      </Button>
-      <a
-        style={styles.register}
-        onClick={(e) => {
-          e.preventDefault();
-          handleView("Register");
-        }}
-      >
-        <Form.Text className="text-muted" style={styles.link}>
-          ¿Aún no tienes una cuenta?
-        </Form.Text>
-        <Text style={[styles.link, { fontWeight: "bold" }]}>Regístrate</Text>
-      </a>
     </View>
   );
 }
 const styles = StyleSheet.create({
-  mainContainer: {
+  mainView: {
     flex: 1,
-    display: "flex",
-    flexDirection: "column",
     justifyContent: "center",
-    alignContent: "center",
-    padding: 10,
+    backgroundColor: colors.primary,
+    padding: 20,
   },
-  formContainer: {
-    flex: 1,
+  secondaryButton: {
+    backgroundColor: "white",
+    marginTop: 3,
+    borderColor: colors.primary,
+    borderWidth: 1,
+    borderRadius: 8,
   },
-  button: {
+  primaryButton: {
+    borderStyle: "solid",
+    backgroundColor: colors.primary,
+    borderColor: colors.primary,
+    borderRadius: 8,
     marginTop: 10,
-    backgroundColor: colors.primary
   },
-  forgotPassword: {
-    alignItems: "flex-end",
+
+  form: {
+    backgroundColor: "black",
+    padding: 30,
+    borderRadius: 10,
+    backgroundColor: colors.blured,
   },
-  register: {
-    flex: 1,
-    display: "flex",
-    flexDirection: "column",
+  avatarContainer: {
     alignItems: "center",
-    marginTop: 5,
+    marginBottom: 30,
   },
-  link: {
-    cursor: "pointer",
-    textDecorationLine: "underline",
+  mailText: {
+    textTransform: "capitalize",
   },
-  logoContainer: {
-    flex: 1,
+  inputContainer: {
+    backgroundColor: "white",
     alignItems: "center",
-    justifyContent: "center",
+    flexDirection: "row",
+    borderRadius: 10,
+    marginBottom: 8,
   },
+  forgotPass: {
+    textAlign: 'right',
+    fontWeight: "300"
+  },
+  textContainer: {
+    backgroundColor: colors.blured,
+    padding: 20,
+    borderRadius: 10,
+    marginTop: 15,
+    alignItems: 'center'
+  },
+  registerText:{
+    fontWeight: "700"
+  }
 });
