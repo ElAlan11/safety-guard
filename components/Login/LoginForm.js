@@ -3,12 +3,19 @@ import { Input, Icon, Button, Avatar } from "@rneui/themed";
 import { NavigationContext } from "@react-navigation/native";
 import { useContext } from "react";
 import colors from "../assets/colors";
+import font from '../assets/fonts'
 
 export default function LoginForm() {
   const navigation = useContext(NavigationContext);
   const handleView = (view) => {
     navigation.navigate(view);
   };
+  const goToForgot =() =>{
+    navigation.navigate("ForgotPassword");
+  }
+  const goToRegister = () =>{
+    navigation.navigate("Register");
+  }
   return (
     <View style={styles.mainView}>
       <View style={styles.form}>
@@ -39,7 +46,7 @@ export default function LoginForm() {
           ></Input>
         </View>
         <View >
-          <TouchableOpacity>
+          <TouchableOpacity onPress={goToForgot}>
             <Text style={styles.forgotPass} >¿Olvidaste tu contraseña?</Text>
           </TouchableOpacity>
         </View>
@@ -48,8 +55,8 @@ export default function LoginForm() {
         </View>
       </View>
       <View style={styles.textContainer}>
-      <TouchableOpacity style={{flexDirection: 'row'}}>
-        <Text>¿Nuevo en la app? </Text><Text style={styles.registerText}>Registrate.</Text>
+      <TouchableOpacity style={{flexDirection: 'row'}} onPress={goToRegister}>
+        <Text style ={styles.slogan}>¿Nuevo en la app? </Text><Text style={styles.registerText}>Registrate.</Text>
       </TouchableOpacity>
       </View>
     </View>
@@ -99,7 +106,8 @@ const styles = StyleSheet.create({
   },
   forgotPass: {
     textAlign: 'right',
-    fontWeight: "300"
+    fontWeight: "300",
+    fontFamily: font.primary
   },
   textContainer: {
     backgroundColor: colors.blured,
@@ -109,6 +117,10 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   registerText:{
-    fontWeight: "700"
+    fontWeight: "700",
+    fontFamily: font.primary,
+  },
+  slogan:{
+    fontFamily: font.primary
   }
 });

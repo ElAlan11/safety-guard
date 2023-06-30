@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { StyleSheet, Text } from "react-native";
-import { Button, ThemeProvider, Stack, Form, InputGroup } from "react-bootstrap";
+import { StyleSheet, Text, SafeAreaView, View, ScrollView, KeyboardAvoidingView } from "react-native";
 import { NavigationContext } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import colors from "../components/assets/colors";
+import { Input, Icon, Button, Avatar } from "@rneui/themed";
 
 export default class Register extends Component {
   static contextType = NavigationContext;
@@ -15,118 +15,142 @@ export default class Register extends Component {
   }
 
   render() {
-    const handleChangeView = () => {
+    const cancelView = () => {
       const navigation_ = this.context;
-      navigation_.navigate("Login", {});
+      navigation_.goBack();
     };
-
+    const submit = () => {
+      const navigation_ = this.context;
+      navigation_.goBack();
+    }
+    //Nombre,Apellido,Telefono,Usuario,Contraseña,Confirma tu contraseña
     return (
-      <ThemeProvider breakpoints={["xxxl", "xxl", "xl", "lg", "md", "sm", "xs", "xxs"]} minBreakpoint="xxs">
-        <div style={styles.container}>
-          <Stack direction="vertical" style={styles.center}>
-            <Text>Logo</Text>
-          </Stack>
-          <Stack className="pt-5" direction="vertical" gap={3} style={styles.content_form}>
-            <Stack style={styles.content_form}>
-              <Form>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <InputGroup className="mb-3">
-                    <InputGroup.Text className="bg-white" id="basic-addon1">
-                      <Icon name="account-settings" size={24} color="#7c7c7c" />
-                    </InputGroup.Text>
-                    <Form.Control placeholder="Nombre" aria-label="Nombre" aria-describedby="basic-addon1" />
-                  </InputGroup>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <InputGroup className="mb-3">
-                    <InputGroup.Text className="bg-white" id="basic-addon1">
-                      <Icon name="account-settings" size={24} color="#7c7c7c" />
-                    </InputGroup.Text>
-                    <Form.Control placeholder="Apellido" aria-label="Apellido" aria-describedby="basic-addon1" />
-                  </InputGroup>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <InputGroup className="mb-3">
-                    <InputGroup.Text className="bg-white" id="basic-addon1">
-                      <Icon name="phone" size={24} color="#7c7c7c" />
-                    </InputGroup.Text>
-                    <Form.Control placeholder="Teléfono" aria-label="Telefono" aria-describedby="basic-addon1" type="tel" />
-                  </InputGroup>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <InputGroup className="mb-3">
-                    <InputGroup.Text className="bg-white" id="basic-addon1">
-                      <Icon name="email" size={24} color="#7c7c7c" />
-                    </InputGroup.Text>
-                    <Form.Control placeholder="Usuario" aria-label="Usuario" aria-describedby="basic-addon1" type="email" />
-                  </InputGroup>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <InputGroup className="mb-3">
-                    <InputGroup.Text id="basic-addon1" className="bg-white">
-                      <Icon name="lock" size={24} color="#7c7c7c" />
-                    </InputGroup.Text>
-                    <Form.Control placeholder="Contraseña" aria-label="password" aria-describedby="basic-addon1" type="password" />
-                  </InputGroup>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <InputGroup className="mb-3">
-                    <InputGroup.Text id="basic-addon1" className="bg-white">
-                      <Icon name="lock" size={24} color="#7c7c7c" />
-                    </InputGroup.Text>
-                    <Form.Control placeholder="Confirma tu contrasena" aria-label="password-confirm" aria-describedby="basic-addon1" type="password" />
-                  </InputGroup>
-                </Form.Group>
-              </Form>
-            </Stack>
-
-            <Button variant="secondary">Regístrarme</Button>
-
-            <a className="text-center w-100" onClick={handleChangeView}>
-              <Form.Text className="text-muted" style={styles.link_type}>
-                ¿Ya tienes una cuenta?
-                <br />
-              </Form.Text>
-              <Form.Text style={styles.bold_font}>Inicia sesión</Form.Text>
-            </a>
-          </Stack>
-        </div>
-      </ThemeProvider>
+      
+      <SafeAreaView style={styles.safeArea}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}>
+          <View style={styles.mainView}>
+            <View style={styles.card}>
+              <View style={styles.avatarContainer}>
+                <Avatar rounded icon={{ name: "home-account" }} size={150} containerStyle={styles.avatar} />
+              </View>
+              <Input
+                placeholder="Nombre"
+                leftIcon={<Icon name="user" type="font-awesome" size={24} color={colors.primary} />}
+                inputContainerStyle={{ borderBottomWidth: 0 }}
+                errorStyle={{ height: 0 }}
+                labelStyle={{ height: 0 }}
+                containerStyle={styles.inputContainer}
+                textContentType="givenName"
+                inputMode="text"
+              ></Input>
+              <Input
+                placeholder="Apellido"
+                leftIcon={<Icon name="user" type="font-awesome" size={24} color={colors.primary} />}
+                inputContainerStyle={{ borderBottomWidth: 0 }}
+                errorStyle={{ height: 0 }}
+                labelStyle={{ height: 0 }}
+                containerStyle={styles.inputContainer}
+                textContentType="familyName"
+                inputMode="text"
+              ></Input>
+              <Input
+                placeholder="Telefono"
+                leftIcon={<Icon name="phone" type="font-awesome" size={24} color={colors.primary} />}
+                inputContainerStyle={{ borderBottomWidth: 0 }}
+                errorStyle={{ height: 0 }}
+                labelStyle={{ height: 0 }}
+                containerStyle={styles.inputContainer}
+                textContentType="telephoneNumber"
+                inputMode="numeric"
+              ></Input>
+              <Input
+                placeholder="Correo"
+                leftIcon={<Icon name="envelope" type="font-awesome" size={24} color={colors.primary} />}
+                inputContainerStyle={{ borderBottomWidth: 0 }}
+                errorStyle={{ height: 0 }}
+                labelStyle={{ height: 0 }}
+                containerStyle={styles.inputContainer}
+                textContentType="emailAddress"
+                inputMode="email"
+                autoCapitalize="none"
+              ></Input>
+              <Input
+                placeholder="Contraseña"
+                leftIcon={<Icon name="asterisk" type="font-awesome" size={24} color={colors.primary} />}
+                inputContainerStyle={{ borderBottomWidth: 0 }}
+                errorStyle={{ height: 0 }}
+                labelStyle={{ height: 0 }}
+                containerStyle={styles.inputContainer}
+                textContentType="newPassword"
+                inputMode="text"
+                autoCapitalize="none"
+                secureTextEntry
+              ></Input>
+              <Input
+                placeholder="Confirmar contraseña"
+                leftIcon={<Icon name="asterisk" type="font-awesome" size={24} color={colors.primary} />}
+                inputContainerStyle={{ borderBottomWidth: 0 }}
+                errorStyle={{ height: 0 }}
+                labelStyle={{ height: 0 }}
+                containerStyle={styles.inputContainer}
+                textContentType="newPassword"
+                inputMode="text"
+                autoCapitalize="none"
+                secureTextEntry
+              ></Input>
+              <Button buttonStyle={styles.primaryButton} onPress={submit}>Registrar</Button>
+              <Button buttonStyle={styles.secondaryButton} titleStyle={{color: colors.primary}} onPress={cancelView}>Cancelar</Button>
+            </View>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
-    padding: 24,
-    backgroundColor: "#fff",
+    backgroundColor: colors.primary,
   },
-  center: {
-    textAlign: "center",
-    alignItems: "center",
-  },
-  content_form: {
-    height: "70%",
+  mainView: {
+    flex: 1,
     justifyContent: "center",
-    margin: "3rem 0rem",
+    padding: 20,
   },
-  link_type: {
-    cursor: "pointer",
-    textDecorationLine: "underline",
+  card: {
+    backgroundColor: colors.blured,
+    padding: 20,
+    borderRadius: 10,
   },
-  bold_font: {
-    fontWeight: "bold",
+  inputContainer: {
+    backgroundColor: "white",
+    alignItems: "center",
+    flexDirection: "row",
+    borderRadius: 10,
+    marginBottom: 10,
   },
-  txt_right: {
-    textAlign: "right",
-    alignItems: "right",
+  avatar: {
+    backgroundColor: colors.primary,
   },
-  forgot_password: {
-    top: "-10px",
-    textAlign: "right",
-    alignItems: "right",
-    cursor: "pointer",
-    position: "relative",
+  avatarContainer: {
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  primaryButton: {
+    borderStyle: "solid",
+    backgroundColor: colors.primary,
+    borderColor: colors.primary,
+    borderRadius: 10,
+    marginTop: 10,
+    padding: 10
+  },
+  secondaryButton: {
+    backgroundColor: "white",
+    borderColor: colors.primary,
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 8,
+    marginTop:2
   },
 });

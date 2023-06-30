@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { StyleSheet, Text } from "react-native";
-import { Button, Input, ThemeProvider, Stack, Form, InputGroup } from "react-bootstrap";
+import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { NavigationContext } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import colors from "../components/assets/colors";
+import { Input, Icon, Button, Avatar } from "@rneui/themed";
 
 export default class ForgotPassword extends Component {
   static contextType = NavigationContext;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -14,107 +15,75 @@ export default class ForgotPassword extends Component {
     };
   }
 
-  _handleCheck = async () => {
-    const navigation_ = this.context;
-    /*const data_session = await AsyncStorage.getItem('elementos');
-    if(data_session == null){
-      return;
-    } else{
-      let data = JSON.parse(data_session);
-      console.log(data[0]);
-      navigation1.navigate('Home', {});
-    }*/
-  };
-
   render() {
-    const handleChangeView = (view) => {
+    const submit = () =>{
       const navigation_ = this.context;
-      navigation_.navigate(view, {});
-    };
-
-    const handleClick = () => {
-      const navigation_ = this.context;
-      navigation_.navigate("Home", {});
-    };
-
+      navigation_.goBack();
+    }
     return (
-      <ThemeProvider breakpoints={["xxxl", "xxl", "xl", "lg", "md", "sm", "xs", "xxs"]} minBreakpoint="xxs">
-        <div style={styles.container}>
-          <Stack direction="vertical" style={styles.center}>
-            <Text>Logo</Text>
-          </Stack>
-          <Stack className="pt-5" direction="vertical" gap={3} style={styles.content_form}>
-            <Stack style={styles.content_form}>
-              <Form>
-                <Stack>
-                  <Text style={styles.title_form}>Ingresa tu correo electronico, te enviaremos un correo con instrucciones para restablecer tu contraseña.</Text>
-                </Stack>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <InputGroup className="mb-3">
-                    <InputGroup.Text className="bg-white" id="basic-addon1">
-                      <Icon name="email" size={24} color="#7c7c7c" />
-                    </InputGroup.Text>
-                    <Form.Control placeholder="Email" aria-label="Usuario" aria-describedby="basic-addon1" type="email" />
-                  </InputGroup>
-                </Form.Group>
-              </Form>
-            </Stack>
-
-            <Button variant="secondary" onClick={handleClick}>
-              Envíar
-            </Button>
-
-            <a
-              className="text-center w-100"
-              onClick={(e) => {
-                e.preventDefault();
-                handleChangeView("Login");
-              }}
-            >
-              <Form.Text style={styles.bold_font}>Iniciar sesión</Form.Text>
-            </a>
-          </Stack>
-        </div>
-      </ThemeProvider>
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.container}>
+          <View style={styles.box}>
+            <View style={styles.avatarContainer}>
+              <Avatar rounded icon={{ name: "account-wrench" }} size={150} containerStyle={styles.avatar}/>
+            </View>
+            <Text style={styles.text}>Ingresa tu correo para recibir instrucciones</Text>
+            <Input
+              placeholder="Correo"
+              leftIcon={<Icon name="envelope" type="font-awesome" size={24} color={colors.primary} />}
+              inputContainerStyle={{ borderBottomWidth: 0 }}
+              errorStyle={{ height: 0 }}
+              containerStyle={styles.inputContainer}
+              textContentType="emailAddress"
+              inputMode="email"
+              autoCapitalize="none"
+            ></Input>
+            <Button buttonStyle={styles.primaryButton} onPress={submit}>Enviar</Button>
+          </View>
+        </View>
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: colors.primary,
+  },
   container: {
     flex: 1,
-    padding: 24,
-    backgroundColor: "#fff",
-  },
-  center: {
-    textAlign: "center",
-    alignItems: "center",
-  },
-  content_form: {
-    height: "70%",
     justifyContent: "center",
-    margin: "3rem 0rem",
+    padding: 20,
   },
-  link_type: {
-    cursor: "pointer",
-    textDecorationLine: "underline",
+  box: {
+    backgroundColor: colors.blured,
+    padding: 20,
+    borderRadius: 10
   },
-  bold_font: {
-    fontWeight: "bold",
+  primaryButton: {
+    borderStyle: "solid",
+    backgroundColor: colors.primary,
+    borderColor: colors.primary,
+    borderRadius: 8,
+    marginTop: 12,
   },
-  txt_right: {
-    textAlign: "right",
-    alignItems: "right",
+  inputContainer: {
+    backgroundColor: "white",
+    alignItems: "center",
+    flexDirection: "row",
+    borderRadius: 10,
   },
-  forgot_password: {
-    top: "-10px",
-    textAlign: "right",
-    alignItems: "right",
-    cursor: "pointer",
-    position: "relative",
+  text: {
+    marginBottom: 12,
+    fontWeight: "500",
+    fontSize: 14,
   },
-  title_form: {
-    fontWeight: "bold",
-    marginBottom: "1rem",
+  avatarContainer:{
+    alignItems:'center'
   },
+  avatar:{
+    backgroundColor: colors.primary,
+    marginBottom: 10
+  }
 });
