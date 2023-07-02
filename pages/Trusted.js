@@ -1,7 +1,7 @@
 import TrustedContact from "../components/Trusted/TrustedContact.js";
 import { useState } from "react";
-import colors from "../components/assets/colors.js";
-import { View, SafeAreaView } from "react-native";
+import { View, SafeAreaView,ScrollView } from "react-native";
+import TrustedNew from '../components/Trusted/TrustedNew';
 
 export default function Trusted() {
   const [open, setOpen] = useState(false);
@@ -15,13 +15,13 @@ export default function Trusted() {
   };
   return (
     <>
-      <SafeAreaView style={{ backgroundColor: colors.primary, flex:1 }}>
-        <View>{/* <HeaderMenu open={open} toggle={toggle}></HeaderMenu> */}</View>
-        <View style={{ padding: 10 }}>
+      <SafeAreaView style={{ flex:1 }}>
+        <ScrollView style={{}}>
           {exampleArray.map((user) => {
             return <TrustedContact name={user.name} tel={user.tel} id={user.id} image={user.image} key={user.id}></TrustedContact>;
           })}
-        </View>
+          <TrustedNew></TrustedNew>
+        </ScrollView>
       </SafeAreaView>
     </>
   );

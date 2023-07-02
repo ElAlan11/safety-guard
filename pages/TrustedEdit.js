@@ -1,7 +1,8 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet,TouchableOpacity,KeyboardAvoidingView } from "react-native";
 import colors from "../components/assets/colors";
 import { useState } from "react";
 import { Input, Icon, Button, Avatar } from "@rneui/themed";
+
 
 export default function TrustedEdit({ navigation, route }) {
   const [user, setUser] = useState(route.params);
@@ -14,21 +15,28 @@ export default function TrustedEdit({ navigation, route }) {
     navigation.goBack();
   };
   return (
+    <>
+    <Icon name="chevron-down" type="font-awesome" size={24} color= 'white' containerStyle={{backgroundColor:colors.primary,paddingTop:10}}/>
     <View style={styles.mainView}>
-      <View style={styles.form}>
+      <KeyboardAvoidingView style={styles.form} behavior="padding">
+      <View style={{padding:30}}>
         <View style={styles.avatarContainer}>
-          <Avatar rounded source={{ uri: user.image }} size={150} />
+          <Avatar rounded source={{ uri: user.image }} size={150}>
+            <Avatar.Accessory size={50} onPress={(e)=>{}} color='white' style={{backgroundColor:colors.primary}} />
+          </Avatar>
         </View>
         <View>
           <Input placeholder="Nombre" leftIcon={<Icon name="user" type="font-awesome" size={24} color={colors.primary} />} inputContainerStyle = {{borderBottomWidth: 0,}} errorStyle={{height: 0}} labelStyle={{height: 0}} containerStyle={styles.inputContainer}  textContentType="name"  defaultValue={user.name} inputMode="text"></Input>
-          <Input placeholder="Telefono" leftIcon={<Icon name="phone" type="font-awesome" size={24} color={colors.primary} />} inputContainerStyle = {{borderBottomWidth: 0}} errorStyle={{height: 0}} labelStyle={{height: 0}} containerStyle={styles.inputContainer}  textContentType="telephoneNumber" defaultValue={user.tel} inputMode="tel"></Input>
+          <Input placeholder="Telefono" leftIcon={<Icon name="phone" type="font-awesome" size={24} color={colors.primary} />} inputContainerStyle = {{borderBottomWidth: 0}} errorStyle={{height: 0}} labelStyle={{height: 0}} containerStyle={styles.inputContainer}  textContentType="telephoneNumber" defaultValue={user.tel} inputMode="numeric" ></Input>
         </View>
         <View>
           <Button buttonStyle={styles.primaryButton} onPress={editProfile} >Agregar</Button>
           <Button buttonStyle={styles.secondaryButton} titleStyle={{color: colors.primary}} onPress={cancel} >Cancelar</Button>
         </View>
-      </View>
+        </View>
+      </KeyboardAvoidingView>
     </View>
+    </>
   );
 }
 
@@ -56,7 +64,6 @@ const styles = StyleSheet.create({
 
   form: {
     backgroundColor: "black",
-    padding: 30,
     borderRadius: 10,
     backgroundColor: colors.blured,
   },

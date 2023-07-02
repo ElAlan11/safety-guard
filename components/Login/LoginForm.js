@@ -16,6 +16,9 @@ export default function LoginForm() {
   const goToRegister = () =>{
     navigation.navigate("Register");
   }
+  const goToMain =() =>{
+    navigation.navigate("MainScreen");
+  }
   return (
     <View style={styles.mainView}>
       <View style={styles.form}>
@@ -51,7 +54,7 @@ export default function LoginForm() {
           </TouchableOpacity>
         </View>
         <View>
-          <Button buttonStyle={styles.primaryButton}>Iniciar Sesion</Button>
+          <Button buttonStyle={styles.primaryButton} onPress={goToMain}>Iniciar Sesion</Button>
         </View>
       </View>
       <View style={styles.textContainer}>

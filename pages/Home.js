@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import { StyleSheet } from "react-native";
-import { ThemeProvider } from "react-bootstrap";
-import HeaderMenu from "../components/Home/HeaderMenu.js";
-import BtnContainer from "../components/Home/BtnContainer.js";
+import { StyleSheet, Text, View } from "react-native";
+import BtnContainer from "../components/Home/BtnContainer";
 
 export default class Home extends Component {
   constructor(props) {
@@ -17,28 +15,26 @@ export default class Home extends Component {
     };
 
     return (
-      <ThemeProvider breakpoints={["xxxl", "xxl", "xl", "lg", "md", "sm", "xs", "xxs"]} minBreakpoint="xxs">
-        <div style={styles.header}>
-          <HeaderMenu open={this.state.open} toggle={toggle} />
-        </div>
-        <div style={styles.container}>
-          <BtnContainer toggle={toggle} />
-        </div>
-      </ThemeProvider>
+      <View style={styles.mainView}>
+        <Text style={styles.text}>Presioname si estas en peligro</Text>
+        <BtnContainer></BtnContainer>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  header: {
-    width: "100%",
-    height: "auto",
-  },
-  container: {
-    display: "flex",
+  mainView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "red",
-    height: "100%",
-    width: "100%",
-    flexDirection: "column",
+    padding: 20
+  },
+  text: {
+    color: "white",
+    textAlign: "center",
+    fontSize: 30,
+    fontWeight: 'bold'
   },
 });
