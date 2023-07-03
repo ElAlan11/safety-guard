@@ -43,38 +43,8 @@ export default class Home extends Component {
   
 
   render() {
-
-    const handleChangeView = (view) => {
-        const navigation_ = this.context;
-        navigation_.navigate(view, {});
-    }
-
-    const handleLogin = () => {
-        const navigation_ = this.context;
-        navigation_.navigate('Home', {});
-    }
-
-    /*const onLocationActualization = position => {
-        // Aquí ya tenemos la ubicación ;)
-        console.log(position)
-        const location = position;
-        this.setState({ location });
-    }
-
-    const onErrorLocation = err => {
-        console.log("Error obteniendo ubicación: ", err);
-    }
-
-    const options = {
-        enableHighAccuracy: true, // Alta precisión
-        maximumAge: 0, // No queremos caché
-        timeout: 5000 // Esperar solo 5 segundos
-    };*/
-
-    //idWatcher = navigator.geolocation.watchPosition(onLocationActualization, onErrorLocation, options);
-
     const toggle = () => {
-        this.setState({ open: !this.state.open });
+      this.setState({ open: !this.state.open });
     };
 
     const handlePressHelp = () => {
