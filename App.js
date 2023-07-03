@@ -12,7 +12,7 @@ import MainScreen from "./TabBar/MainScreen";
 import TrustedEdit from "./pages/TrustedEdit";
 //SettingsViews
 import Account from "./pages/Account";
-import Privacy from "./pages/Privacy";
+import Notifications from "./pages/Notifications";
 import Theme from "./pages/Theme";
 
 export default function App() {
@@ -31,9 +31,9 @@ export default function App() {
           <Stack.Screen name="TrustedEdit" component={TrustedEdit} options={{ presentation: "modal" }} />
         </Stack.Group>
         <Stack.Group screenOptions={{ headerShown: true }}>
-          <Stack.Screen name="Account" component={Account} />
-          <Stack.Screen name="Privacy" component={Privacy} />
-          <Stack.Screen name="Theme" component={Theme} />
+          <Stack.Screen name="Account" component={Account} options={{title:'Account Settings'}}/>
+          <Stack.Screen name="Notifications" component={Notifications} options={{title:'Notifications Settings'}}/>
+          <Stack.Screen name="Theme" component={Theme} options={{title:'Theme Settings'}}/>
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>

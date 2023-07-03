@@ -34,9 +34,9 @@ export default function MainScreen() {
         tabBarInactiveTintColor: "gray",
       })}
     >
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Trusted" component={Trusted} />
-      <Tab.Screen name="Settings" component={Settings} />
+      <Tab.Screen name="Home" component={Home} options={{headerTitle:'Botón',title:'Principal'}}/>
+      <Tab.Screen name="Trusted" component={Trusted} options={{headerTitle:'Contactos de confianza',title:'contactos'}}/>
+      <Tab.Screen name="Settings" component={Settings} options={{title:'Ajustes'}}/>
     </Tab.Navigator>
   );
 }
