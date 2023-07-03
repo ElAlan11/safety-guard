@@ -10,9 +10,6 @@ export default class Home extends Component {
     };
   }
   render() {
-    const toggle = () => {
-      this.setState({ open: !this.state.open });
-    };
 
     return (
       <View style={styles.mainView}>

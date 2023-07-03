@@ -1,5 +1,5 @@
 import { ListItem, Avatar } from "@rneui/themed";
-import { TouchableOpacity,StyleSheet } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { useContext } from "react";
 import { NavigationContext } from "@react-navigation/native";
 import colors from '../assets/colors'
