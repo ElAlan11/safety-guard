@@ -3,6 +3,7 @@ import Home from "../pages/Home";
 import Settings from '../pages/Settings';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Icon } from "@rneui/themed";
+import MyAlerts from '../pages/MyAlerts';
 import colors from '../components/assets/colors';
 
 const Tab = createBottomTabNavigator();
@@ -20,6 +21,8 @@ export default function MainScreen() {
             iconName = focused ? "contacts" : "contacts-outline";
           } else if (route.name === "Settings") {
             iconName = focused ? "cog" : "cog-outline";
+          }else if (route.name === "MyAlerts") {
+            iconName = focused ? "account-alert" : "account-alert-outline";
           }
           return (
             <Icon
@@ -36,6 +39,7 @@ export default function MainScreen() {
     >
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Trusted" component={Trusted} />
+      <Tab.Screen name="MyAlerts" component={MyAlerts} />
       <Tab.Screen name="Settings" component={Settings} />
     </Tab.Navigator>
   );
