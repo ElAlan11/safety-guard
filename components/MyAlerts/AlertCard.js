@@ -10,7 +10,7 @@ export default function AlertCard({fecha,content,id}) {
         </Card.Title>
         <Card.Divider />
         <Card.FeaturedSubtitle numberOfLines={7} style={{ color: "black" }}>
-          {content}
+          {content}...
         </Card.FeaturedSubtitle>
       </Card>
     </TouchableOpacity>
