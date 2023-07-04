@@ -1,9 +1,9 @@
 import { TouchableOpacity, StyleSheet} from "react-native";
 import { Avatar } from "@rneui/themed";
 
-export default function BtnContainer({handlePressHelp}) {
+export default function BtnContainer({}) {
   return (
-    <TouchableOpacity onPress={handlePressHelp}> 
+    <TouchableOpacity > 
       <Avatar
         rounded
         icon={{ name: "report", type: "material" }}
