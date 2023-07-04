@@ -1,11 +1,15 @@
 import { View,Text,StyleSheet } from 'react-native'
+import SettingsItem from '../components/Settings/SettingsItem'
 
 export default function Account() {
     return(
         <View style={styles.mainView}>
-            <Text>
-                Working on it!
-            </Text>
+            <SettingsItem type="Cambiar contraseña" icon="lock"/>
+            <SettingsItem type="Cerrar sesión" icon="logout"/>
+            <View style={styles.deleteF}>
+                <SettingsItem type="Eliminar Cuenta" icon="delete-forever"/>
+            </View>
+            
         </View>
     )
 }
@@ -14,7 +18,10 @@ const styles = StyleSheet.create({
     mainView:
     {
         flex:1,
-        justifyContent: 'center',
-        alignItems:'center'
+        paddingTop:30
+
+    },
+    deleteF:{
+        paddingTop: 30
     }
 })

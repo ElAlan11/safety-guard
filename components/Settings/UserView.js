@@ -26,14 +26,15 @@ export default function UserView({user, mail, image}) {
 const styles = StyleSheet.create({
     mainView: {
         flexDirection: 'row',
-        padding: 10
+        padding: 15,
+        paddingBottom: 5
     },
     textView: {
         justifyContent: 'center',
         paddingLeft: 10
     },
     editBtn:{
-        margin:10,
+        margin:15,
         marginTop: 0,
         width: 70,
         justifyContent:'center',

@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import SettingsItem from "../components/Settings/SettingsItem";
-export default function Theme() {
+export default function Notifications() {
   return (
     <View style={styles.mainView}>
       <SettingsItem type="idk" icon="visibility" />

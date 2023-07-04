@@ -11,7 +11,7 @@ export default function SettingsItem({ icon, type, view }) {
     }
   return (
     <TouchableOpacity onPress={goToView}>
-      <ListItem containerStyle={{ borderColor: colors.primary }} bottomDivider>
+      <ListItem containerStyle={{ borderColor: colors.primary,paddingLeft:15 }} bottomDivider >
         <Icon name={icon} color='white'  size={20} iconStyle={{padding:5, borderRadius:5,backgroundColor:colors.primary}}/>
         <ListItem.Content>
           <ListItem.Title>{type}</ListItem.Title>
