@@ -1,11 +1,18 @@
-import { View,Text,StyleSheet } from 'react-native';
-
+import { View,StyleSheet } from 'react-native';
+import UserView from '../components/Settings/UserView'
+import {Divider} from '@rneui/themed'
+import SettingsList from '../components/Settings/SettingsList'
 export default function Settings() {
+    const user = {
+        name: 'Luis',
+        mail: 'luis66850@gmail.com',
+        image: "https://randomuser.me/api/portraits/men/36.jpg"
+    }
     return(
         <View style={styles.mainView}>
-            <Text>
-                Working on it!
-            </Text>
+            <UserView user={user.name} image={user.image} mail={user.mail}/>
+            <Divider/>
+            <SettingsList></SettingsList>
         </View>
     )
 };
@@ -13,7 +20,5 @@ export default function Settings() {
 const styles = StyleSheet.create({
     mainView:{
         flex:1,
-        alignItems: 'center',
-        justifyContent: 'center'
     }
 })

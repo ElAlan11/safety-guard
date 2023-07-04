@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 import LoginForm from "../components/Login/LoginForm.js";
 import colors from "../components/assets/colors.js";
 

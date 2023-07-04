@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, SafeAreaView, View, ScrollView, KeyboardAvoidingView } from "react-native";
+import { StyleSheet, SafeAreaView, View, ScrollView, KeyboardAvoidingView } from "react-native";
 import { NavigationContext } from "@react-navigation/native";
 import colors from "../components/assets/colors";
 import { Input, Icon, Button, Avatar } from "@rneui/themed";
