@@ -1,4 +1,4 @@
-import { View, StyleSheet,TouchableOpacity,KeyboardAvoidingView } from "react-native";
+import { View, StyleSheet,KeyboardAvoidingView } from "react-native";
 import colors from "../components/assets/colors";
 import { useState } from "react";
 import { Input, Icon, Button, Avatar } from "@rneui/themed";

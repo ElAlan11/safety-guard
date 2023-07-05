@@ -14,6 +14,11 @@ import TrustedEdit from "./pages/TrustedEdit";
 import Account from "./pages/Account";
 import Notifications from "./pages/Notifications";
 import Theme from "./pages/Theme";
+  //Settings-Account
+import ChangePassword from './pages/ChangePassword'
+import DeleteAccount from './pages/DeleteAccount'
+//CameraView
+import CameraView from './pages/CameraView'
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -34,6 +39,9 @@ export default function App() {
           <Stack.Screen name="Account" component={Account} options={{title:'Account Settings'}}/>
           <Stack.Screen name="Notifications" component={Notifications} options={{title:'Notifications Settings'}}/>
           <Stack.Screen name="Theme" component={Theme} options={{title:'Theme Settings'}}/>
+          <Stack.Screen name="Camera" component={CameraView} options={{title:'Camera'}}/>
+          <Stack.Screen name="DeleteAccount" component={DeleteAccount} options={{title:'Eliminar Cuenta'}}/>
+          <Stack.Screen name="ChangePassword" component={ChangePassword} options={{title:'Cambiar Contraseña'}}/>
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
