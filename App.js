@@ -19,6 +19,7 @@ import ChangePassword from './pages/ChangePassword'
 import DeleteAccount from './pages/DeleteAccount'
 //CameraView
 import CameraView from './pages/CameraView'
+import Maps from './pages/Maps'
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -26,6 +27,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {/* <Stack.Screen name="Maps" component={Maps} /> */}
+
         <Stack.Group>
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React,{ useState } from "react";
 import { Camera, CameraType } from "expo-camera";
 import * as FaceDetector from "expo-face-detector";
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -6,6 +6,7 @@ import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 export default function CameraView() {
   const [type, setType] = useState(CameraType.front);
   const [permission, requestPermission] = Camera.useCameraPermissions();
+  const [camera,setCamera] = useState(React.createRef())
 
   if (!permission) {
     // Camera permissions are still loading
@@ -21,15 +22,18 @@ export default function CameraView() {
       </View>
     );
   }
-  const handleFacesDetected = ({ faces }) => {
+  const handleFacesDetected = async ({ faces }) => {
     console.log(faces);
+    // camera.takePictureAsync({ onPictureSaved: this.onPictureSaved });
   };
+
 
   return (
     <View style={styles.container}>
       <View style={styles.card}>
         <Camera
-        //  onFacesDetected={handleFacesDetected}
+          
+          onFacesDetected={handleFacesDetected}
           style={styles.camera}
           type={type}
           faceDetectorSettings={{
@@ -39,6 +43,7 @@ export default function CameraView() {
             minDetectionInterval: 100,
             tracking: true,
           }}
+          
         ></Camera>
       </View>
     </View>
