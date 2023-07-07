@@ -19,7 +19,8 @@ import ChangePassword from './pages/ChangePassword'
 import DeleteAccount from './pages/DeleteAccount'
 //CameraView
 import CameraView from './pages/CameraView'
-import Maps from './pages/Maps'
+//CardView-Modal
+import CardView from './pages/CardView'
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -27,8 +28,6 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {/* <Stack.Screen name="Maps" component={Maps} /> */}
-
         <Stack.Group>
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
@@ -37,6 +36,7 @@ export default function App() {
         <Stack.Group>
           <Stack.Screen name="MainScreen" component={MainScreen} />
           <Stack.Screen name="TrustedEdit" component={TrustedEdit} options={{ presentation: "modal" }} />
+          <Stack.Screen name="CardView" component={CardView} options={{ presentation: "modal" }} />
         </Stack.Group>
         <Stack.Group screenOptions={{ headerShown: true }}>
           <Stack.Screen name="Account" component={Account} options={{title:'Account Settings'}}/>
