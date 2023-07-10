@@ -1,11 +1,28 @@
-import { View, StyleSheet,KeyboardAvoidingView } from "react-native";
+import { View, StyleSheet, KeyboardAvoidingView, TouchableOpacity } from "react-native";
 import colors from "../components/assets/colors";
 import { useState } from "react";
 import { Input, Icon, Button, Avatar } from "@rneui/themed";
-
+import * as ImagePicker from "expo-image-picker";
 
 export default function TrustedEdit({ navigation, route }) {
   const [user, setUser] = useState(route.params);
+  const [image, setImage] = useState(null);
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+      base64: true
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+
+    }
+  };
 
   const editProfile = () => {
     navigation.goBack();
@@ -16,26 +33,57 @@ export default function TrustedEdit({ navigation, route }) {
   };
   return (
     <>
-    <Icon name="chevron-down" type="font-awesome" size={24} color= 'white' containerStyle={{backgroundColor:colors.primary,paddingTop:10}}/>
-    <View style={styles.mainView}>
-      <KeyboardAvoidingView style={styles.form} behavior="padding">
-      <View style={{padding:30}}>
-        <View style={styles.avatarContainer}>
-          <Avatar rounded source={{ uri: user.image }} size={150}>
-            <Avatar.Accessory size={50} onPress={(e)=>{}} color='white' style={{backgroundColor:colors.primary}} />
-          </Avatar>
-        </View>
-        <View>
-          <Input placeholder="Nombre" leftIcon={<Icon name="user" type="font-awesome" size={24} color={colors.primary} />} inputContainerStyle = {{borderBottomWidth: 0,}} errorStyle={{height: 0}} labelStyle={{height: 0}} containerStyle={styles.inputContainer}  textContentType="name"  defaultValue={user.name} inputMode="text"></Input>
-          <Input placeholder="Telefono" leftIcon={<Icon name="phone" type="font-awesome" size={24} color={colors.primary} />} inputContainerStyle = {{borderBottomWidth: 0}} errorStyle={{height: 0}} labelStyle={{height: 0}} containerStyle={styles.inputContainer}  textContentType="telephoneNumber" defaultValue={user.tel} inputMode="numeric" ></Input>
-        </View>
-        <View>
-          <Button buttonStyle={styles.primaryButton} onPress={editProfile} >Agregar</Button>
-          <Button buttonStyle={styles.secondaryButton} titleStyle={{color: colors.primary}} onPress={cancel} >Cancelar</Button>
-        </View>
-        </View>
-      </KeyboardAvoidingView>
-    </View>
+      <Icon name="chevron-down" type="font-awesome" size={24} color="white" containerStyle={{ backgroundColor: colors.primary, paddingTop: 10 }} />
+      <View style={styles.mainView}>
+        <KeyboardAvoidingView style={styles.form} behavior="padding">
+          <View style={{ padding: 30 }}>
+            <View style={styles.avatarContainer}>
+              <Avatar rounded source={{ uri: image ? image : user.image }} size={150} containerStyle={{backgroundColor: "#BDBDBD"}}>
+                  <Avatar.Accessory
+                    size={50}
+                    onPress={async (e) => {
+                      await pickImage();
+                    }}
+                    color="white"
+                    style={{ backgroundColor: colors.primary }}
+                  />
+              </Avatar>
+            </View>
+            <View>
+              <Input
+                placeholder="Nombre"
+                leftIcon={<Icon name="user" type="font-awesome" size={24} color={colors.primary} />}
+                inputContainerStyle={{ borderBottomWidth: 0 }}
+                errorStyle={{ height: 0 }}
+                labelStyle={{ height: 0 }}
+                containerStyle={styles.inputContainer}
+                textContentType="name"
+                defaultValue={user.name}
+                inputMode="text"
+              ></Input>
+              <Input
+                placeholder="Telefono"
+                leftIcon={<Icon name="phone" type="font-awesome" size={24} color={colors.primary} />}
+                inputContainerStyle={{ borderBottomWidth: 0 }}
+                errorStyle={{ height: 0 }}
+                labelStyle={{ height: 0 }}
+                containerStyle={styles.inputContainer}
+                textContentType="telephoneNumber"
+                defaultValue={user.tel}
+                inputMode="numeric"
+              ></Input>
+            </View>
+            <View>
+              <Button buttonStyle={styles.primaryButton} onPress={editProfile}>
+                {user.name ? "Guardar" : "Añadir"}
+              </Button>
+              <Button buttonStyle={styles.secondaryButton} titleStyle={{ color: colors.primary }} onPress={cancel}>
+                Cancelar
+              </Button>
+            </View>
+          </View>
+        </KeyboardAvoidingView>
+      </View>
     </>
   );
 }
@@ -52,14 +100,14 @@ const styles = StyleSheet.create({
     marginTop: 3,
     borderColor: colors.primary,
     borderWidth: 1,
-    borderRadius: 8
+    borderRadius: 8,
   },
   primaryButton: {
     borderStyle: "solid",
     backgroundColor: colors.primary,
     borderColor: colors.primary,
     borderRadius: 8,
-    marginTop: 10
+    marginTop: 10,
   },
 
   form: {
@@ -74,12 +122,11 @@ const styles = StyleSheet.create({
   mailText: {
     textTransform: "capitalize",
   },
-  inputContainer:{
-    backgroundColor:'white',
-    alignItems:'center',
-    flexDirection:'row',
-    borderRadius:10,
+  inputContainer: {
+    backgroundColor: "white",
+    alignItems: "center",
+    flexDirection: "row",
+    borderRadius: 10,
     marginBottom: 10,
-    
-  }
+  },
 });
