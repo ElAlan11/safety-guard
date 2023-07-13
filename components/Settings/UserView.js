@@ -1,8 +1,9 @@
 import { View,Text,StyleSheet,TouchableOpacity} from 'react-native'
-import {Avatar} from '@rneui/themed'
+import {Avatar,useTheme} from '@rneui/themed'
 import colors from '../assets/colors'
 
 export default function UserView({user, mail, image}) {
+    const {theme} = useTheme();
     return(
         <>
     <View style={styles.mainView}>
@@ -10,10 +11,10 @@ export default function UserView({user, mail, image}) {
             <Avatar rounded source={{uri: image}} size={70}/>
         </View>
         <View style={styles.textView}>
-            <Text style={styles.user}>
+            <Text style={[styles.user,{color: theme.colors.black}]}>
                 {user}
             </Text>
-            <Text style={styles.mail}>
+            <Text style={[styles.mail,{color: theme.colors.grey2}]}>
                 {mail}
             </Text>
         </View>

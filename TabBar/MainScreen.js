@@ -6,10 +6,13 @@ import { Icon } from "@rneui/themed";
 import MyAlerts from "../pages/MyAlerts";
 import colors from "../components/assets/colors";
 import Maps from '../pages/Maps'
+import {useTheme} from '@rneui/themed'
+import { SafeAreaView } from 'react-native'
 
 const Tab = createBottomTabNavigator();
 
 export default function MainScreen() {
+  const {theme} = useTheme();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -31,6 +34,10 @@ export default function MainScreen() {
         },
         tabBarActiveTintColor: route.name === "Home" ? "red" : colors.primary,
         tabBarInactiveTintColor: "gray",
+        headerStyle: {backgroundColor: theme.colors.white},
+        headerTitleStyle: {color: theme.colors.black},
+        tabBarStyle: { backgroundColor: theme.colors.white,borderTopColor: theme.colors.white},
+        headerShadowVisible: false        
       })}
     >
       <Tab.Screen name="Home" component={Home} options={{ title: "Botón" }} />

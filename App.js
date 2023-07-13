@@ -1,13 +1,14 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {ThemeProvider} from '@rneui/themed'
 //LoginViews
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 //MainView
 import MainScreen from "./TabBar/MainScreen";
-
+import theme from './components/assets/theme'
 //View for Edit Trusted Contacs
 import TrustedEdit from "./pages/TrustedEdit";
 //SettingsViews
@@ -26,6 +27,7 @@ export default function App() {
   const Stack = createNativeStackNavigator();
 
   return (
+    <ThemeProvider theme={theme}>
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Group>
@@ -48,5 +50,6 @@ export default function App() {
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
+    </ThemeProvider>
   );
 }
