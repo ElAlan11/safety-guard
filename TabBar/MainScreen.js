@@ -32,11 +32,11 @@ export default function MainScreen() {
           }
           return <Icon name={iconName} size={size} type="material-community" color={color} />;
         },
-        tabBarActiveTintColor: route.name === "Home" ? "red" : colors.primary,
+        tabBarActiveTintColor: route.name === "Home" ? "red" : theme.colors.primary,
         tabBarInactiveTintColor: "gray",
         headerStyle: {backgroundColor: theme.colors.white},
         headerTitleStyle: {color: theme.colors.black},
-        tabBarStyle: { backgroundColor: theme.colors.white,borderTopColor: theme.colors.white},
+        tabBarStyle: { backgroundColor: theme.colors.white, borderTopColor: theme.colors.white},
         headerShadowVisible: false        
       })}
     >

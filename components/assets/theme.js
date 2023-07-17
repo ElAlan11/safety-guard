@@ -1,3 +1,4 @@
+import { color } from "@rneui/base";
 import { createTheme } from "@rneui/themed";
 
 const theme = createTheme({
@@ -10,18 +11,29 @@ const theme = createTheme({
         maxHeight: 200,
         borderRadius: 15,
         shadowOffset: { width: -2, height: 5 },
-        shadowOpacity: 0.5,
-        shadowRadius: 1,
+        shadowOpacity: 0.8,
+        shadowRadius: .2,
       },
     },
+    Dialog: {
+      backdropStyle: {
+        backgroundColor: "rgba(100,100,100,.9)",
+      },
+      overlayStyle: {
+        borderRadius: 15,
+      },
+      animationType:"fade"
+    },
   },
-  darkColors:{
+  darkColors: {
     background: "#141414",
+    primary: "#C967E0",
   },
-  lightColors:{
-    background: "#E0E0E0"
+  lightColors: {
+    background: "#E0E0E0",
+    primary: "#572D61",
   },
-  mode: "dark",
+  mode: "light",
 });
 
 export default theme;

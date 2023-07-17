@@ -1,9 +1,14 @@
 import { View,Text,StyleSheet,TouchableOpacity} from 'react-native'
-import {Avatar,useTheme} from '@rneui/themed'
+import {Avatar,useTheme,useThemeMode} from '@rneui/themed'
 import colors from '../assets/colors'
 
 export default function UserView({user, mail, image}) {
     const {theme} = useTheme();
+    const {mode,setMode} = useThemeMode();
+
+    const toggleMode = () =>{
+        mode != "dark"? setMode("dark") : setMode("light")
+    }
     return(
         <>
     <View style={styles.mainView}>
@@ -19,7 +24,7 @@ export default function UserView({user, mail, image}) {
             </Text>
         </View>
     </View>
-        <TouchableOpacity style={styles.editBtn}><Text style={{color:colors.primary,fontSize:17}}>Editar</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.editBtn} onPress={toggleMode}><Text style={{color:theme.colors.primary,fontSize:17}}>Editar</Text></TouchableOpacity>
     </>
     )
 }
