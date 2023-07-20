@@ -1,9 +1,16 @@
 import { TouchableOpacity, StyleSheet} from "react-native";
 import { Avatar } from "@rneui/themed";
+import { NavigationContext } from "@react-navigation/native";
+import { useContext } from "react";
 
-export default function BtnContainer({handlePressHelp}) {
+export default function BtnContainer({}) {
+  const navigation = useContext(NavigationContext)
+
+  const handleNav = () => {
+    navigation.navigate("Camera");
+  }
   return (
-    <TouchableOpacity onPress={handlePressHelp}> 
+    <TouchableOpacity onPress={handleNav}> 
       <Avatar
         rounded
         icon={{ name: "report", type: "material" }}
