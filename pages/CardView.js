@@ -1,45 +1,63 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useState } from "react";
 import colors from "../components/assets/colors";
-import { Icon } from "@rneui/themed";
+import { Icon, makeStyles } from "@rneui/themed";
 
 export default function CardView({ route, navigation }) {
   const [content, setContent] = useState(route.params); //{fecha,content}
-  const goBack = () =>{
+  const goBack = () => {
     navigation.goBack();
-  }
+  };
+  const styles = useStyles();
   return (
     <>
-      <Icon name="chevron-down" type="font-awesome" size={24} color="white" containerStyle={{ backgroundColor: colors.primary, paddingTop: 10 }} onPress={goBack} />
+      <Icon
+        name="chevron-down"
+        type="font-awesome"
+        size={24}
+        iconStyle={styles.color}
+        containerStyle={styles.chevronContainer}
+        onPress={goBack}
+      />
       <ScrollView style={styles.mainView}>
         <View style={styles.titleContainer}>
-          <Text>{content.fecha}</Text>
+          <Text style={styles.text}>{content.fecha}</Text>
         </View>
         <View style={styles.container}>
-          <Text>{content.content}</Text>
+          <Text style={styles.text}>{content.content}</Text>
         </View>
       </ScrollView>
     </>
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   mainView: {
     flex: 1,
     padding: 20,
-    backgroundColor: colors.primary,
+    backgroundColor: theme.colors.background,
   },
   titleContainer: {
     width: "100%",
-    backgroundColor: colors.blured,
+    backgroundColor: "rgba(255,255,255,.6)",
     borderRadius: 10,
     padding: 20,
     alignItems: "center",
   },
   container: {
-    backgroundColor: colors.blured,
+    backgroundColor: "rgba(255,255,255,.6)",
     marginTop: 20,
     borderRadius: 10,
     padding: 20,
   },
-});
+  chevronContainer: {
+    backgroundColor: theme.colors.background,
+    paddingTop: 10,
+  },
+  color: {
+    color: theme.colors.primary
+  },
+  text: {
+    color: "black",
+  },
+}));

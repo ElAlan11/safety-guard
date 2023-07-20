@@ -15,7 +15,7 @@ export default function AlertCard({fecha,content,id}) {
 
   return (
     <TouchableOpacity style={{ flex: 1 }} onPress={togglenav}>
-      <Card containerStyle={{shadowColor: theme.colors.grey2,backgroundColor: theme.colors.white}}>
+      <Card containerStyle={{shadowColor: theme.colors.grey4,backgroundColor: theme.colors.white}}>
         <Card.Title>
           <Text style={{color: theme.colors.primary}}>{fecha}</Text>
         </Card.Title>
