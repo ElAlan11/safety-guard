@@ -8,11 +8,14 @@ import {
   Icon,
   useColorModeValue,
   createIcon,
+  useDisclosure
 } from '@chakra-ui/react';
 
 import { Helmet } from "react-helmet";
+import ModalInfo from '../../components/ModalInfo';
 
 export default function Hero() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
       <Helmet>
@@ -56,7 +59,7 @@ export default function Hero() {
               }}>
               Comenzar
             </Button>
-            <Button variant={'link'} colorScheme={'blue'} size={'sm'}>
+            <Button variant={'link'} colorScheme={'blue'} size={'sm'} onClick={onOpen}>
               Saber más
             </Button>
             <Box>
@@ -81,6 +84,7 @@ export default function Hero() {
           </Stack>
         </Stack>
       </Container>
+      <ModalInfo isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
     </>
   );
 }

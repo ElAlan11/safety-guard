@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 
 const Content = () => {
     const {id} = useParams();
-    const [locationGuest, setLocationGuest] = useState([-103.383734, 20.697058]);
+    let idWatcher = null;
+    const [locationGuest, setLocationGuest] = useState(null);
     const data = {
         id: id,
         position: [-103.3933895, 20.6971379],
@@ -19,8 +20,14 @@ const Content = () => {
     };
 
     function success(position) {
+        console.log({position});
         const location = position.coords;
-        setLocationGuest([location?.longitude, location?.latitude]);
+        let location_ = {
+            position: [location.longitude, location.latitude],
+            title: 'Tu ubicación',
+        };
+        console.log({location_});
+        setLocationGuest(location_);
     };
       
     function errorLoc(err) {
@@ -29,19 +36,25 @@ const Content = () => {
     }
 
     useEffect(()=>{
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(success, errorLoc, options);
-    }else{
-        console.log('El navegador no soporta geolocalización')
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(success, errorLoc, options);
+            initWatcher();
+        }else{
+            console.log('El navegador no soporta geolocalización')
+        }
+    },[])
+
+    const initWatcher = () => {
+        console.log('iniciando')
+        idWatcher = navigator.geolocation.watchPosition(success, errorLoc, options);
     }
-    },[navigator.geolocation])
 
     return (
         <>
             {
-                id && data?
+                id && data && locationGuest?
                 (
-                    <MapContent marker={data} markerHelp={{position: locationGuest, title: 'Tu ubicación'}}/>
+                    <MapContent marker={data} markerHelp={locationGuest}/>
                 ):
                 (
                     <Load />
