@@ -2,9 +2,6 @@ var express = require('express');
 var router = express.Router();
 const userController = require('../controllers/user-controller');
 
-const myusername = 'user1' // BORRAR
-const mypassword = 'mypassword' // BORRAR
-
 /**
  * Servicio para iniciar sesión en la aplicación 
  * @param {String} req.email Correo electrónico del usuario
@@ -24,7 +21,6 @@ router.post('/login', async (req, res , next)=>{
       res.json({data: {
         message: 'Login successful', 
         expiresAt: session.cookie.expires, 
-        // session: req.session // BORRAR
       }})
       return;
     }
@@ -35,7 +31,6 @@ router.post('/login', async (req, res , next)=>{
     error: {
       code: 401,
       message: 'Invalid username or password',
-      // session: req.session // BORRAR
     }
   });
 

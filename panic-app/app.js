@@ -30,16 +30,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// // Obtener las configuraciones globales desde la base de datos
-// var sessionMaxAge;
-
-// gconfigController.getConfig().then((res) => {
-//   console.log("Global config retrieved from DB:\n", JSON.stringify(res, null, 2));
-//   var tmpSessionAge = res.find(res => res.parameter === 'SESSION_MAX_AGE');
-//   if(tmpSessionAge) sessionMaxAge = parseInt(tmpSessionAge.value);
-// }).catch((error) => {
-//   console.error('Unable to retrieve configuration from database: ', error);
-// });
 
 const sessionMaxAge = 1000 * 60 * 60 * 12; //12 hours - MOVER A CONFIGURACIÓN BD
 const sessionStore = new mySQLStore(config);
