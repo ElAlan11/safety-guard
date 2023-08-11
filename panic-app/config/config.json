@@ -1,6 +1,7 @@
 {
   "development": {
     "user": "root",
+    "username": "root",
     "password": "modulares2023",
     "database": "panicappbd",
     "host": "localhost",
@@ -8,6 +9,7 @@
   },
   "test": {
     "user": "root",
+    "username": "root",
     "password": null,
     "database": "database_test",
     "host": "127.0.0.1",
@@ -15,6 +17,7 @@
   },
   "production": {
     "user": "root",
+    "username": "root",
     "password": null,
     "database": "database_production",
     "host": "127.0.0.1",

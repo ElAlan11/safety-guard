@@ -3,9 +3,9 @@ const User = require('../models').User;
 
 module.exports = {
 
-    getUserPassword(reqEmail){
+    getUserByEmail(reqEmail){
         return User.findAll({
-            attributes: ['email', 'password'],
+            attributes: ['id', 'email', 'password'],
             where: {
                 email: reqEmail
             }

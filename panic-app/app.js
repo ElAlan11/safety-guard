@@ -10,8 +10,9 @@ const mySQLStore = require('express-mysql-session')(sessions);
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var contactsRouter = require('./routes/contacts');
 
-const gconfigController = require('./controllers/globalconfig-controller');
+// const gconfigController = require('./controllers/globalconfig-controller');
 
 // Establece las variables de entorno de .env si el entorno no es productivo
 if (process.env.NODE_ENV !== 'production') {
@@ -53,6 +54,7 @@ sessionStore.onReady().then(() => {
 
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
+app.use('/contact', contactsRouter);
 
 
 // catch 404 and forward to error handler

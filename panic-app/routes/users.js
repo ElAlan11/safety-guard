@@ -10,13 +10,14 @@ const userController = require('../controllers/user-controller');
  */
 router.post('/login', async (req, res , next)=>{
   
-  var user = await userController.getUserPassword(req.body.email);
+  var user = await userController.getUserByEmail(req.body.email);
 
   if(user.length > 0){
     // Usuario existe en BDD
     if(user[0].password === req.body.password){
       var session = req.session;
-      session.user = req.body.email;
+      session.user = user[0].email;
+      session.userId = user[0].id;
 
       res.json({data: {
         message: 'Login successful', 
