@@ -26,9 +26,16 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
+    external_id: {
+      allowNull: false,
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
     user_id: DataTypes.INTEGER,
     name: DataTypes.STRING,
-    phone: DataTypes.STRING
+    phone: DataTypes.STRING,
+    sms_topic: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Contact',

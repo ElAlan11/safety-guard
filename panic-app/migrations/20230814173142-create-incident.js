@@ -32,6 +32,9 @@ module.exports = {
       audio_file: {
         type: Sequelize.STRING
       },
+      photos_folder: {
+        type: Sequelize.STRING
+      },
       description: {
         type: Sequelize.STRING
       },

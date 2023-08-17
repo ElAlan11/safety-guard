@@ -9,6 +9,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      external_id: {
+        allowNull: false,
+        primaryKey: true,
+        type: Sequelize.UUID,
+        defaultValue: DataTypes.UUIDV4
+      },
       user_id: {
         type: Sequelize.INTEGER,
         references: {
@@ -20,6 +26,9 @@ module.exports = {
         type: Sequelize.STRING
       },
       phone: {
+        type: Sequelize.STRING
+      },
+      sms_topic: {
         type: Sequelize.STRING
       },
       createdAt: {

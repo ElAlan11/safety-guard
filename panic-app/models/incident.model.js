@@ -22,7 +22,9 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'category'
         }
       );
-      Incident.hasMany(models.IncidentPhoto);
+      Incident.hasMany(models.IncidentPhoto, {
+        foreignKey: 'incident_id'
+      });
     }
   }
   Incident.init({
@@ -41,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     initial_latitude: DataTypes.FLOAT(8,5),
     initial_longitude: DataTypes.FLOAT(8,5),
     audio_file: DataTypes.STRING,
+    photos_folder: DataTypes.STRING,
     description: DataTypes.STRING,
     category: DataTypes.INTEGER
   }, {

@@ -11,6 +11,7 @@ const mySQLStore = require('express-mysql-session')(sessions);
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var contactsRouter = require('./routes/contacts');
+var incidentsRouter = require('./routes/incidents');
 
 // const gconfigController = require('./controllers/globalconfig-controller');
 
@@ -55,6 +56,7 @@ sessionStore.onReady().then(() => {
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
 app.use('/contact', contactsRouter);
+app.use('/incident', incidentsRouter);
 
 
 // catch 404 and forward to error handler
