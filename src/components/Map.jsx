@@ -10,7 +10,6 @@ import { Point } from 'ol/geom';
 import { Feature } from 'ol';
 import marker_pin from '../assets/pin-de-ubicacion-p1.png';
 import marker_pin_guest from '../assets/pin-de-ubicacion-p2.png';
-import { Transform } from 'ol/transform';
 import 'ol/ol.css';
 import { ZoomToExtent, defaults as defaultControls } from 'ol/control'
 import {
@@ -24,195 +23,59 @@ import '../App.css'
 
 
 const MapContent = ({ marker, markerHelp }) => {
-  // Transform the centre into something openlayers understands
-      // set intial state
-  /*const [ map, setMap ] = useState()
-  const [ featuresLayer, setFeaturesLayer ] = useState()
   const [centre] = useState(marker.position);
-  const [point, setPoint] = useState(
-    new Point(fromLonLat(marker.position))
-  );
-  const [point2, setPoint2] = useState(
-    new Point(fromLonLat(markerHelp.position))
-  );
-  const [feature, setFeature] = useState();
-  const [transformedCentre] = useState(fromLonLat(centre));
-  const [newMarker, setNewMarker] = useState(
-    new Feature({
-      geometry: point,
-      name: marker.title,
-    })
-  );
+  const [transformedCentre, setTransformedCentre] = useState(fromLonLat(centre));
+  const [transformedCentreGuest, setTransformedCentreGuest] = useState(fromLonLat(markerHelp.position));
 
-  const [markerHelper, setMarkerHelper] = useState(
-    new Feature({
-      geometry: point2,
-      name: markerHelp.title,
-    })
-  )
+  // create state ref that can be accessed in OpenLayers onclick callback function
+  const mapRef = useRef();
+  const pointRef = useRef();
+  const pointGuestRef = useRef();
+  var point = ''
+  var pointGuest = ''
+  var feature = ''
+  var featureGuest = ''
+  var map = ''
+  var featuresLayer = ''
+  var vectorSource
+  mapRef.current = map;
+  pointRef.current = point;
+  pointGuestRef.current = pointGuest;
+  var iconStyle = new Style({
+      image: new Icon({
+          src: marker_pin,
+      }),
+  });
 
-  const iconStyle = new Style({
+  var iconStyleGuest = new Style({
     image: new Icon({
-      anchor: [0.5, 46],
-      anchorXUnits: 'fraction',
-      anchorYUnits: 'pixels',
-      src: marker_pin
+        src: marker_pin_guest,
     }),
   });
-
-  const labelStyle = new Style({
-    text: new Text({
-      font: '12px Calibri,sans-serif',
-      overflow: true,
-      fill: new Fill({
-        color: '#000'
-      }),
-      stroke: new Stroke({
-        color: '#fff',
-        width: 3
-      }),
-      offsetY: -12
-    })
-  });
-
-  var style = [iconStyle, labelStyle];
-  
-  // pull refs
-  const mapElement = useRef()
-  
-  // create state ref that can be accessed in OpenLayers onclick callback function
-  const mapRef = useRef()
-  mapRef.current = map
-
-  // initialize map on first render - logic formerly put into componentDidMount
-  useEffect( () => {
-
-    // create and add vector source layer
-    const initalFeaturesLayer = new VectorLayer({
-      source: new VectorSource({
-        features: [newMarker, markerHelper],
-      }),
-      style: function(feature) {
-        labelStyle.getText().setText(feature.get('name'));
-        return style;
-      }
-    })
-
-    // create map
-    const initialMap = new Map({
-      target: mapElement.current,
-      layers: [
-        new TileLayer({
-          source: new OSM(),
-        }),
-        initalFeaturesLayer
-      ],
-      view: new View({
-        center: fromLonLat(marker.position),
-        zoom: 13
-      }),
-      controls: defaultControls().extend([
-        new ZoomToExtent({
-          extent: [
-            813079.7791264898, 5929220.284081122, 848966.9639063801,
-            5936863.986909639,
-          ],
-        }),
-      ])
-    })
-
-    // save map and vector layer references to state
-    setMap(initialMap)
-    setFeaturesLayer(initalFeaturesLayer)
-
-  },[])
-
-  useEffect(() => {
-    console.log("Detected change in User geolocation");
-
-      if (marker.position) {
-          var newTransformedCentre = fromLonLat(marker.position);
-      }
-      if (map != null) {
-        point.setCoordinates(newTransformedCentre);
-        feature.setGeometry(point);
-
-        map.setView(
-            new View({
-                center: newTransformedCentre,
-                zoom: 17,
-            })
-        );
-
-        // set features to map
-        featuresLayer.setSource(
-            new VectorSource({
-                features: [feature],
-            })
-        );
-    }
-  },[marker, markerHelp, marker.position])*/
-
-  const [map, setMap] = useState();
-  const [centre] = useState(marker.position);
-  const [featuresLayer, setFeaturesLayer] = useState();
-  const [point, setPoint] = useState();
-  const [pointGuest, setPointGuest] = useState();
-  const [feature, setFeature] = useState();
-  const [featureGuest, setFeatureGuest] = useState();
-  const [transformedCentre] = useState(fromLonLat(centre));
-  const [transformedCentreGuest] = useState(fromLonLat(markerHelp.position));
-
-  // create state ref that can be accessed in OpenLayers onclick callback function
-  //  https://stackoverflow.com/a/60643670
-  const mapRef = useRef();
-  mapRef.current = map;
 
   // initialize map on first render - logic formerly put into componentDidMount
   useEffect(() => {
 
       // Create a point
-      var point = new Point(transformedCentre);
-      setPoint(point);
+      point = new Point(transformedCentre);
 
-      var pointGuest = new Point(transformedCentreGuest);
-      setPointGuest(pointGuest);
+      pointGuest = new Point(transformedCentreGuest);
 
       // points/lines/polygons are features that can be used in the vector layer
-      var feature = new Feature({
-          geometry: point,
-          name: marker.title,
-      });
+      feature = new Feature({ geometry: point, name: marker.title, });
 
-      var featureGuest = new Feature({
-        geometry: pointGuest,
-        name: markerHelp.title,
-      });
-
-      var iconStyle = new Style({
-          image: new Icon({
-              src: marker_pin,
-          }),
-      });
-
-      var iconStyleGuest = new Style({
-        image: new Icon({
-            src: marker_pin_guest,
-        }),
-      });
+      featureGuest = new Feature({ geometry: pointGuest, name: markerHelp.title, });
 
       feature.setStyle(iconStyle);
       featureGuest.setStyle(iconStyleGuest);
-      setFeature(feature);
-      setFeatureGuest(featureGuest);
 
       // create vector source itself for the marker on the map
-      var vectorSource = new VectorSource({
+      vectorSource = new VectorSource({
           features: [feature, featureGuest],
       });
 
       // create and add vector source layer
-      const initalFeaturesLayer = new VectorLayer({
+      featuresLayer = new VectorLayer({
           source: vectorSource,
       });
 
@@ -221,16 +84,14 @@ const MapContent = ({ marker, markerHelp }) => {
           center: transformedCentre,
           zoom: 13,
       });
-
       // create map
-      const locationMap = new Map({
+      map = new Map({
           target: mapRef.current,
           layers: [
               new TileLayer({
                   source: new OSM(),
               }),
-
-              initalFeaturesLayer,
+              featuresLayer,
           ],
           view: initialView,
           controls: defaultControls().extend([
@@ -242,42 +103,56 @@ const MapContent = ({ marker, markerHelp }) => {
             }),
           ]),
       });
-      setMap(locationMap);
-      setFeaturesLayer(initalFeaturesLayer);
-  }, []);
+      //setMap(locationMap);
+      //setFeaturesLayer(initalFeaturesLayer);
+  }, [marker, markerHelp]);
 
   // update map if user changes geo location
   useEffect(() => {
       console.log({markerHelp, marker})
+      console.log(featuresLayer.getFeatures())
+      var newTransformedCentre
+      var newTransformedCentreGuest 
 
       if (marker.position) {
-          var newTransformedCentre = fromLonLat(marker.position);
+          newTransformedCentre = fromLonLat(marker.position);
       }
       if(markerHelp.position) {
-          var newTransformedCentreGuest = fromLonLat(markerHelp.position);
+          newTransformedCentreGuest = fromLonLat(markerHelp.position);
       }
+      point.setCoordinates(fromLonLat(marker.position));
+      pointGuest.setCoordinates(fromLonLat(markerHelp.position));
+      feature.setGeometry(point);
+      featureGuest.setGeometry(pointGuest);
 
-      if (map != null) {
-        point.setCoordinates(newTransformedCentre);
-        pointGuest.setCoordinates(newTransformedCentreGuest);
-        feature.setGeometry(point);
-        featureGuest.setGeometry(pointGuest);
+      //console.log({point, pointGuest, newTransformedCentre, newTransformedCentreGuest});
+      console.log({f: feature.getGeometry(), fg: featureGuest.getGeometry()});
 
-        map.setView(
-            new View({
-                center: newTransformedCentre,
-                zoom: 13,
-            })
-        );
+      // set features to map
+      featuresLayer.setSource(
+          new VectorSource({
+              features: [feature, featureGuest],
+          })
+      );
 
-        // set features to map
-        featuresLayer.setSource(
-            new VectorSource({
-                features: [feature, featureGuest],
-            })
-        );
-      }
-  }, [marker.position, markerHelp.position]);
+      map.setView(
+          new View({
+              center: newTransformedCentre,
+              zoom: 13,
+          })
+      );
+
+      /*vectorSource.clear();
+      vectorSource = new VectorSource({
+          features: [feature, featureGuest],
+      });
+      featuresLayer.setSource(vectorSource);
+      //vectorSource.changed();
+      vectorSource.refresh();
+
+      console.log({featuresLayer, map});*/
+      
+  }, [marker, markerHelp]);
 
   // update map if features prop changes - logic formerly put into componentDidUpdate
     return (

@@ -24,7 +24,7 @@ import React, {
         }
       >
         <Routes>
-          <Route path="/follow-up/:id" element={<FollowUp />} />
+          <Route path="/follow-up/:incident_id/:contact_id" element={<FollowUp />} />
           <Route exact path="/" element={<Home />} />
         </Routes>
       </Suspense>
