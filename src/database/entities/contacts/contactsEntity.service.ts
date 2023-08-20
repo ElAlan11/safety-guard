@@ -11,7 +11,6 @@ export class ContactEntityService {
     ){}
 
     async Findcontact(id: number) {
-        console.log(id);
         return await this.contactEntityRepository.findOne({ where: { id } });
     }
 
