@@ -31,6 +31,17 @@ module.exports = {
                 where: { id: incidentId }
             });
     },
+    // Actualiza el estado y ubicación de fotos
+    updateStatusF(incidentId, photosFolder, audioKey){
+        return Incident
+            .update({ 
+                finished: true,
+                photos_folder: photosFolder,
+                audio_file: audioKey
+            }, {
+                where: { id: incidentId }
+            });
+    },
 
     
 

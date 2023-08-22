@@ -45,7 +45,8 @@ module.exports = (sequelize, DataTypes) => {
     audio_file: DataTypes.STRING,
     photos_folder: DataTypes.STRING,
     description: DataTypes.STRING,
-    category: DataTypes.INTEGER
+    category: DataTypes.INTEGER,
+    finished: DataTypes.BOOLEAN 
   }, {
     sequelize,
     modelName: 'Incident',
