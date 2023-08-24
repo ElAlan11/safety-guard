@@ -3,7 +3,7 @@ import Load from "../../components/Load";
 import MapContent from "../../components/Map";
 import { useEffect, useState } from "react";
 import { useGetIncidentQuery, useGetIncidentRefreshMutation } from "../../store/serviceApi";
-import { Stack, Text, Image } from "@chakra-ui/react";
+import { Stack, Text } from "@chakra-ui/react";
 
 const Content = () => {
     const {incident_id, contact_id} = useParams();
