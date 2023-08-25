@@ -15,8 +15,8 @@ export class SNSService {
   private async publishMessage(topic, message) {
     AWS.config.update({
       region: 'us-east-2',
-      accessKeyId: 'AKIAV3MXNGM5E4LW2KV7', 
-      secretAccessKey: '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',
+      accessKeyId: process.env.AWS_ACCESS_KEY, 
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     });
     const sns = new AWS.SNS().publish({
       TopicArn: topic,
@@ -38,8 +38,8 @@ export class SNSService {
     
     AWS.config.update({
       region: 'us-east-2',
-      accessKeyId: 'AKIAV3MXNGM5E4LW2KV7', 
-      secretAccessKey: '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',
+      accessKeyId: process.env.AWS_ACCESS_KEY, 
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     });
 
     const topic = new AWS.SNS({ apiVersion: '2010-03-31' }).createTopic({
@@ -71,8 +71,8 @@ export class SNSService {
   async listTopics() {
     AWS.config.update({
       region: 'us-east-2',
-      accessKeyId: 'AKIAV3MXNGM5E4LW2KV7', 
-      secretAccessKey: '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',
+      accessKeyId: process.env.AWS_ACCESS_KEY, 
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     });
 
     let response = {}
