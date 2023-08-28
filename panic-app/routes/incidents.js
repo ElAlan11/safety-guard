@@ -148,63 +148,73 @@ router.post('/finish', upload.fields([
         var evidenceSent = false; // Indica si se enviaron evidencias (foto, audio)
         var audioKey = null;
         var photosFolder = null;
+        var uploads = [];
 
         const audioPrefix = 'audio-recordings/';
         const photosPrefix = 'photos/'+ incidentId + '/';
-
 
         if(incident.length === 0){ // Si no existen incidentes con el ID recibido...
             responseHandler.sendResponse(req, res, next, 400, 'Non-existent incident');
             return;
         }
-        // Sube las fotos capturadas a la nube
-        if(photos){
-
+        
+        if(photos){ // Sube las fotos capturadas a la nube
             for(var photo of photos){
                 // PENDIENTE Validar formato del archivo
-
-                s3Util.uploadFile(photo.originalname, photosPrefix, photo.buffer).then((uplResult) => {
-                    // // Registra en BD la ruta de la fotos
-                    incPhotoController.create(incidentId, uplResult.key).then((incPhoto) => {
-                        evidenceSent = true;
-                        photosFolder = photosPrefix;
-                        // QUE HACER SI LA CARGA EN S3 Y CREACIÓN EN BD FUE EXITOSA
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        // MANEJAR ERROR AL INSERTAR EN BD
-                    });
-                })
-                .catch((error) => {
-                    console.log(error);
-                    // MANEJAR ERROR AL CARGAR FOTO
-                });
+                var origName = photo.originalname;
+                var fileExt = origName.substring(origName.lastIndexOf('.'), origName.length);
+                var filename = `${Date.now()}_${Math.round(Math.random() * 1E9)}` + fileExt;
+                uploads.push(s3Util.uploadFile(filename, photosPrefix, photo.buffer));
             }
         }
-        // Sube la grabación de audio a la nube
-        if(audio){
+        
+        if(audio){ // Sube la grabación de audio a la nube
             // PENDIENTE validar que el archivo sea de audio
-
-            s3Util.uploadFile(audio[0].originalname, audioPrefix, audio[0].buffer).then((uplResult) => {
-                audioKey = uplResult.key;
-            })
-            .catch((error) => {
-                console.log(error);
-                // MANEJAR ERROR AL CARGAR AUDIO
-            });
+            var origName = audio[0].originalname;
+            var fileExt = origName.substring(origName.lastIndexOf('.'), origName.length);
+            uploads.push(s3Util.uploadFile(incidentId+fileExt, audioPrefix, audio[0].buffer));
         }
 
-        // Guarda la ubicación de las evidencias y actualiza el estado del incidente en BD
-        incidentController.updateStatusF(incidentId, photosFolder, audioKey).then((updRes) => {
-            var msg = 'Incident finished';
-            if(evidenceSent)
-                msg = msg + '. Evidence sent successfully'
+        Promise.allSettled(uploads).then(async(results) => {
+            var sucPhotoUploads = []; // Lista de fotos subidas exitosamente
 
-            responseHandler.sendResponse(req, res, next, 200, msg);
-        })
-        .catch((error) => { // Error al actualizar registro del incidente
-            console.log(error);
-            responseHandler.sendResponse(req, res, next, 500, 'Update record failed');
+            results.forEach((result) => {
+
+                if(result.status == 'fulfilled'){ // Si el archivo se subió exitosamente
+                    var fileKey = result.value.key;
+
+                    if(fileKey.substring(0, 6) === 'photos'){ // Si el archivo es una foto 
+                        var photoData = { incident_id: incidentId, file: fileKey};
+                        sucPhotoUploads.push(photoData);
+                    }
+                    else // Si el archivo es un audio
+                        audioKey = fileKey;
+                }
+                else{ // Si ocurrió un error al subir el archivo
+                    console.log(result.reason);
+                }
+            });
+
+            if(sucPhotoUploads.length > 0){
+                await incPhotoController.bulkCreate(sucPhotoUploads);
+                evidenceSent = true;
+                photosFolder = photosPrefix;
+            }
+            
+            // Guarda la ubicación de las evidencias y actualiza el estado del incidente en BD
+            incidentController.updateStatusF(incidentId, photosFolder, audioKey).then((updRes) => {
+                var msg = 'Incident finished';
+                if(evidenceSent && audioKey)
+                    msg = msg + '. Visual and audio evidence uploaded.'
+                else if(evidenceSent)
+                msg = msg + '. Visual evidence uploaded.'
+
+                responseHandler.sendResponse(req, res, next, 200, msg);
+            })
+            .catch((error) => { // Error al actualizar registro del incidente
+                console.log(error);
+                responseHandler.sendResponse(req, res, next, 500, 'Update record failed');
+            });
         });
     })
     .catch((error) => {

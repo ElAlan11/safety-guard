@@ -14,7 +14,6 @@ const s3 = new AWS.S3();
 
 const uploadFile = (filename, prefix, data) => {    
     return new Promise((resolve, reject) => {
-        filename = `${Date.now()}_${Math.round(Math.random() * 1E9)}` + filename;
 
         const params = {
             Bucket: 'panicapp-evidences',
