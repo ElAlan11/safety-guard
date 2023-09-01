@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'IncidentCategory',
+    tableName: 'incident_categories'
   });
   return IncidentCategory;
 };

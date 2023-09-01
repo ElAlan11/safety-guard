@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const { Op } = require('sequelize');
 const Incident = require('../models').Incident;
 
 module.exports = {
@@ -42,8 +43,32 @@ module.exports = {
                 where: { id: incidentId }
             });
     },
-
-    
-
+    // Sube la descripción de un incidente
+    upldDescription(incidentId, desc, cat){
+        return Incident
+            .update({ 
+                description: desc,
+                category: cat
+            }, {
+                where: { id: incidentId }
+            });
+    },
+    // Obtiene los reportes de incidentes dentro cierta area
+    getIncidentsInArea(maxLatNorth, maxLatSouth, maxLongEast, maxLongWest){
+        return Incident.findAll({
+            attributes: ['id','initial_latitude', 'initial_longitude', 'createdAt', 'description', 'finished'],
+            where: {
+                initial_latitude: {
+                    [Op.between]: [maxLatSouth, maxLatNorth]
+                },
+                initial_longitude: {
+                    [Op.between]: [maxLongWest, maxLongEast]
+                },
+                createdAt: {
+                    [Op.gt]: new Date(Date.now() - (60 * 60 * 1000))
+                }
+            }
+        })
+    },
 
 };

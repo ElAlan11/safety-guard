@@ -1,7 +1,7 @@
 const sendResponse = (req, res, next, resCode, resMsg) => {    
     res.statusCode = resCode;
     
-    if(resCode === 200){
+    if(resCode === 200 || resCode === 204){
         if (typeof resMsg === 'string' || resMsg instanceof String){
             res.json({
                 data: {

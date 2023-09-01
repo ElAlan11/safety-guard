@@ -6,6 +6,7 @@ var responseHandler = require('../utils/response-handler.util');
 var s3Util = require('../utils/aws-s3.util');
 const incidentController = require('../controllers/incident-controller');
 const incPhotoController = require('../controllers/incidentphoto-controller');
+const inCatController = require('../controllers/incidentcategory-controller');
 
 const multer = require('multer');
 
@@ -126,7 +127,7 @@ router.post('/refresh', sessionUtils.validateSession, (req, res , next)=>{
 
 });
 
-
+// Servicio llamado al finalizar la situación de peligro
 router.post('/finish', upload.fields([
     { name: 'photos', maxCount: 10 },
     { name: 'audio', maxCount: 1 }
@@ -224,6 +225,108 @@ router.post('/finish', upload.fields([
     });
 
 });
+
+// Servicio para subir el detalle de un incidente
+router.post('/description', sessionUtils.validateSession, (req, res , next)=>{
+    var userId = req.session.userId;
+
+    // Valida los parámetros de entrada
+    if(!req.body.incidentId || !req.body.description || !req.body.category){
+        responseHandler.sendResponse(req, res, next, 400, 'Incorrect request parameters');
+        return;
+    }
+
+    const incidentId = req.body.incidentId;
+    const description = req.body.description;
+    const categoryName = req.body.category;
+
+    inCatController.getByName(categoryName).then((cat) => {
+        var categoryId = 1; // Categoria default
+
+        if(cat.length !== 0){ // Si se encontró la categoría guarda su ID
+            categoryId = cat[0].id;
+        }
+
+        console.log(incidentId);
+        console.log(description);
+        console.log(categoryName);
+        console.log(categoryId);
+
+        incidentController.upldDescription(incidentId, description, categoryId).then((resUpdt) => {
+            responseHandler.sendResponse(req,res,next, 200, 'Description successfully uploaded');
+        }).catch((error) => {
+            console.log(error)
+            responseHandler.sendResponse(req,res,next, 500, 'Update record failed');
+        });
+        
+    }).catch((error) => {
+        console.log(error);
+        var resMsg = "Failed to retrieve record from database";
+        responseHandler.sendResponse(req,res,next, 500, resMsg);
+    });
+
+});
+
+
+// Obtiene una lista de todos los reportes de incidentes a determinada distancia de la ubicación actual
+router.post('/list', sessionUtils.validateSession, (req, res , next)=>{
+    // PARAMETRIZAR
+    const DISTANCE = 1; // Distancia máxima en km para latitud y longitud 
+    const KMLATITUDE = 0.0089932; // Representación decimal de un kilometro en latitud
+    var userId = req.session.userId;
+
+    // Valida los parámetros de entrada
+    if(!req.body.longitude || !req.body.latitude || isNaN(req.body.longitude) || isNaN(req.body.latitude)){
+        responseHandler.sendResponse(req, res, next, 400, 'Incorrect request parameters');
+        return;
+    }
+    var latitude = parseFloat(req.body.latitude);
+    var longitude = parseFloat(req.body.longitude);
+
+    // Obtiene los grados equivalentes a 1km para la latitud recibida
+    var degreesPerKm = degreesPerKilometer(latitude); 
+
+    // Se calculan las latitudes y longitudes máximas
+    var maxLongEast = longitude+(degreesPerKm*DISTANCE);
+    var maxLongWest = longitude-(degreesPerKm*DISTANCE);
+
+    var maxLatNorth = latitude+(KMLATITUDE);
+    var maxLatSouth = latitude-(KMLATITUDE);
+
+    // console.log(degreesPerKm);
+    // console.log('maxLatNorth: ', maxLatNorth);
+    // console.log('maxLatSouth: ', maxLatSouth);
+    // console.log('maxLongEast: ', maxLongEast);
+    // console.log('maxLongWest: ', maxLongWest);
+
+    // Consulta reportes de incidentes recientes en el área
+    incidentController.getIncidentsInArea(maxLatNorth, maxLatSouth, maxLongEast, maxLongWest).then((incidents)=>{
+        if(incidents.length === 0){ // Si no se encontraron reportes...
+            responseHandler.sendResponse(req,res,next, 204, 'No reports of incidents in the area');
+            return;
+        }
+
+        responseHandler.sendResponse(req,res,next, 200, incidents);
+    })
+    .catch((error)=>{
+        console.log(error);
+        responseHandler.sendResponse(req,res,next, 500, 'Failed to retrieve records from database');
+    });
+
+});
+
+
+
+function degreesPerKilometer(latitude) {
+    const earthEquatorialRadius = 6378.137; // Radio ecuatorial medio de la Tierra en kilómetros
+    // Convertir la latitud de grados a radianes
+    const latRad = latitude * (Math.PI / 180);
+    // Calcular la circunferencia de la Tierra en la latitud dada
+    const circumferenceAtLatitude = 2 * Math.PI * earthEquatorialRadius * Math.cos(latRad);
+    // Calcular cuántos grados de longitud corresponden a 1 km
+    const degreesPerKm = 360 / circumferenceAtLatitude;
+    return degreesPerKm;
+}
 
 
 module.exports = router;
