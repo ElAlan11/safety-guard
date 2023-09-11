@@ -9,6 +9,7 @@ const incPhotoController = require('../controllers/incidentphoto-controller');
 const inCatController = require('../controllers/incidentcategory-controller');
 
 const multer = require('multer');
+const { json } = require('sequelize');
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -293,12 +294,6 @@ router.post('/list', sessionUtils.validateSession, (req, res , next)=>{
     var maxLatNorth = latitude+(KMLATITUDE);
     var maxLatSouth = latitude-(KMLATITUDE);
 
-    // console.log(degreesPerKm);
-    // console.log('maxLatNorth: ', maxLatNorth);
-    // console.log('maxLatSouth: ', maxLatSouth);
-    // console.log('maxLongEast: ', maxLongEast);
-    // console.log('maxLongWest: ', maxLongWest);
-
     // Consulta reportes de incidentes recientes en el área
     incidentController.getIncidentsInArea(maxLatNorth, maxLatSouth, maxLongEast, maxLongWest).then((incidents)=>{
         if(incidents.length === 0){ // Si no se encontraron reportes...
@@ -307,6 +302,52 @@ router.post('/list', sessionUtils.validateSession, (req, res , next)=>{
         }
 
         responseHandler.sendResponse(req,res,next, 200, incidents);
+    })
+    .catch((error)=>{
+        console.log(error);
+        responseHandler.sendResponse(req,res,next, 500, 'Failed to retrieve records from database');
+    });
+
+});
+
+
+// Obtiene una lista de todos los reportes de incidentes levantados por el usuario
+router.get('/list', sessionUtils.validateSession, (req, res , next)=>{
+    var userId = req.session.userId;
+
+    // Consulta reportes de incidentes recientes en el área
+    incidentController.getIncidentsByUser(userId).then((incidents)=>{
+        if(incidents.length === 0){ // Si no se encontraron reportes
+            responseHandler.sendResponse(req,res,next, 204, 'No reports of incidents found');
+            return;
+        }
+
+        var sigUrlsProm = [];
+
+        for(var incident of incidents){
+            if(incident.photos_folder){ // URL firmada de las fotos
+                sigUrlsProm.push(s3Util.getFiles(incident.id, incident.photos_folder));
+            }
+            if(incident.audio_file){ // URL firmada del audio
+                incident.audioUrl = s3Util.getFile(incident.audio_file);
+            }
+        }
+
+        Promise.allSettled(sigUrlsProm).then(async(sigUrlRes) => { // Obtiene las URL firmadas de las fotos evidencia
+
+            sigUrlRes.forEach((result) => {
+                if(result.status == 'fulfilled'){ // Si las URL se obtuvieron exitosamente
+                    var incident = incidents.find(inc => inc.id === result.value.incidentId);
+                    incident.photosUrls = result.value.urls;
+                }
+                else{ // Si ocurrió un error al obtener las URL
+                    console.log(result.reason);
+                }
+            });
+            
+            // Guarda la ubicación de las evidencias y actualiza el estado del incidente en BD
+            responseHandler.sendResponse(req,res,next, 200, incidents);
+        });
     })
     .catch((error)=>{
         console.log(error);

@@ -70,5 +70,16 @@ module.exports = {
             }
         })
     },
+    // Obtiene el historial  de incidentes de un usuario
+    getIncidentsByUser(userId){
+        return Incident.findAll({
+            raw: true,
+            attributes: ['id', 'initial_latitude', 'initial_longitude', 'createdAt', 'description', 'audio_file', 'photos_folder'],
+            where: {
+                user_id: userId,
+                finished: 1
+            }
+        })
+    },
 
 };

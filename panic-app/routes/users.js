@@ -77,7 +77,7 @@ router.post('/register', (req, res , next)=>{
  * Destruye la cookie con la sesión del usuario
  * @param {cookie} session Recibe una cookie con la sesión del usuario
  */
-router.get('/logout',(req,res,next) => {
+router.post('/logout',(req,res,next) => {
   try {
     req.session.destroy();
     responseHandler.sendResponse(req,res,next, 200, 'Logout successful');
